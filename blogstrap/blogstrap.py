@@ -36,5 +36,5 @@ def create_app(config_file=None):
     return app
 
 if __name__ == "__main__":
-        app = create_app('.blogit.conf')
+        app = create_app('.blogstrap.conf')
         app.run()

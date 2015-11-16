@@ -10,7 +10,7 @@ I want to publish my articles the same way I publish source code.
 
 * **Readers aren't always visiting in a browser**.
 
-Blogit puts forward markup languages that emphasise human readability, and serve
+Blogstrap puts forward markup languages that emphasise human readability, and serve
 html only when html is needed.
 
 * **HTML rendering should be done client-side**.
