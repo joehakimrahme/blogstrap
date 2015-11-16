@@ -1,22 +1,24 @@
-Blogstrap - yet another static web generator
-============================================
+Blogstrap - A dumb blogging platform
+====================================
 
 Blogstrap is a simple blogging platform based on a few core principles:
 
-* **Version control management tools like git implement a lot of useful features
-  for blogging**
+* **Version control management tools implement a lot of useful features for
+  blogging**
 
-I want to publish my articles the same way I publish source code.
+I want to publish my articles the same way I publish source code. Draft review
+and Pull Request follow the same workflow and the same tools should be reused.
 
 * **Readers aren't always visiting in a browser**.
 
-Blogstrap puts forward markup languages that emphasise human readability, and serve
-html only when html is needed.
+Blogstrap puts forward markup languages that emphasise human readability, and
+serve html only when html is needed.
 
 * **HTML rendering should be done client-side**.
 
 It doesn't make sense for your blog to hold both the markup file and its html
-counterpart.
+counterpart. The repo hold the info once, the client can decide how to display
+it.
 
 Dependencies
 ------------
@@ -25,6 +27,8 @@ Blogstrap depends on the following 2 projects:
 
 * Flask
 * Strapdown.js
+
+This is written here just to give you the information. 
 
 
 Installation
@@ -36,15 +40,14 @@ Installation
 pip install blogstrap
 ```
 
-* It's still changing fast so we recommend installing from source:
+* It's still changing fast so I recommend installing from source:
 
 ```
-python setup.py instsall
+python setup.py install
 ```
-
 
 It's recommended that you install Blogstrap inside a virtualenv or in a
-dedicated virtual machine (or cloud instance)
+dedicated virtual machine (or cloud instance).
 
 
 Publish a blog with Blogstrap
@@ -52,7 +55,7 @@ Publish a blog with Blogstrap
 
 After installing Blogstrap on your machine, here's how you can use it for
 blogging. There are multiple ways to host and serve your Flask application, here
-we're showing an example of how to do it with `gunicorn`.
+I'm showing an example of how to do it with `gunicorn`.
 
 * Create a new directory `articles`
 * Inside that directory create a file called `wsgi.py`
@@ -75,7 +78,7 @@ THEME="simplex"
 *  Serve it over the network:
 
 ```
-$ gunicorn wsgi:application
+$ gunicorn wsgi:application -b '0.0.0.0'
 ```
 
 * Open article in a web browser, at the location `http://<gunicorn_address>/heblloworld`
