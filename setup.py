@@ -7,7 +7,7 @@ setup(
     name='Blogstrap',
     author="Joe H. Rahme",
     author_email="joehakimrahme@gmail.com",
-    version='0.1',
+    version='0.1.1',
     description="A dumb blogging platform based on Strapdown.js",
     long_description=__doc__,
     packages=['blogstrap'],
