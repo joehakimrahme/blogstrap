@@ -1,7 +1,30 @@
+import exceptions
+
 from flask import abort
 from flask import Flask
 from flask import render_template
 from flask import request
+from jinja2 import TemplateNotFound
+
+
+class ArticleNotFound(exceptions.IOError):
+    pass
+
+
+class ArticleReader(object):
+
+    def __init__(self, path):
+        self.path = path
+
+    def __enter__(self):
+        try:
+            with open(self.path) as f:
+                return ''.join(f.read())
+        except IOError:
+            raise ArticleNotFound(self.path)
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        pass
 
 
 def create_app(config_file=None):
@@ -19,20 +42,17 @@ def create_app(config_file=None):
         root_directory = app.config['BLOGROOT']
         blogpost = "/".join((root_directory, blogpost))
         try:
-            with open(blogpost) as article:
-                content = "".join(article.read())
+            with ArticleReader(blogpost) as article:
                 if iscurl:
-                    return content
+                    return article
                 else:
                     return render_template("strapdown.html",
                                            theme=app.config['THEME'],
-                                           text=content,
+                                           text=article,
                                            title=app.config['BLOGTITLE'])
-        except IOError:
-            if iscurl:
-                abort(404)
-            else:
-                return render_template('404.html'), 404
+        except ArticleNotFound:
+            # need better support for curl
+            abort(404)
     return app
 
 if __name__ == "__main__":
