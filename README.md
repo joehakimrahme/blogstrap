@@ -20,15 +20,14 @@ It doesn't make sense for your blog to hold both the markup file and its html
 counterpart. The repo hold the info once, the client can decide how to display
 it.
 
+
 Dependencies
 ------------
 
 Blogstrap depends on the following 2 projects:
 
-* Flask
-* Strapdown.js
-
-This is written here just to give you the information. 
+* [Flask](http://flask.pocoo.org/)
+* [Strapdown.js](http://strapdownjs.com/)
 
 
 Installation

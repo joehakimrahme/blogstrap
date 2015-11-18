@@ -3,7 +3,7 @@
 
 from setuptools import setup
 
-repo_url="http://github.com/joehakimrahme/blogstrap"
+repo_url = "http://github.com/joehakimrahme/blogstrap"
 
 setup(
     name='Blogstrap',
