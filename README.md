@@ -59,14 +59,14 @@ I'm showing an example of how to do it with `gunicorn`.
 * Create a new directory `articles`
 * Inside that directory create a file called `wsgi.py`
 
-```
+```python
 from blogstrap.blogstrap import create_app
 application = create_app("/path/to/articles/.blogstrap.conf")
 ```
 
 * Inside that directory create a file called `.blogstrap.conf`
 
-```
+```python
 BLOGROOT="/path/to/articles"
 BLOGTITLE="My super blog published with Blogstrap"
 THEME="simplex"
@@ -85,5 +85,5 @@ $ gunicorn wsgi:application -b '0.0.0.0'
 * Note that you can use `curl` to get the markdown version
 
 ```
-curl http://<gunicorn_address>/heblloworld
+curl http://<gunicorn_address>/helloworld
 ```
