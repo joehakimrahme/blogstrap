@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Blogstrap by joehakimrahme</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">Blogstrap</h1>
+        <p class="header">A dumb blogging platform based on Strapdown.js</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/joehakimrahme/blogstrap/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/joehakimrahme/blogstrap/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/joehakimrahme/blogstrap">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/joehakimrahme">joehakimrahme</a></p>
+
+
+      </header>
+      <section>
+        <p><a href="https://api.travis-ci.org/joehakimrahme/blogstrap"><img src="https://api.travis-ci.org/joehakimrahme/blogstrap.png" alt="Build Status"></a></p>
+
+<h1>
+<a id="blogstrap---a-dumb-blogging-platform" class="anchor" href="#blogstrap---a-dumb-blogging-platform" aria-hidden="true"><span class="octicon octicon-link"></span></a>Blogstrap - A dumb blogging platform</h1>
+
+<p>Blogstrap is a simple blogging platform based on a few core principles:</p>
+
+<ul>
+<li><strong>Version control management tools implement a lot of useful features for
+blogging</strong></li>
+</ul>
+
+<p>I want to publish my articles the same way I publish source code. Draft review
+and Pull Request follow the same workflow and the same tools should be reused.</p>
+
+<ul>
+<li>
+<strong>Readers aren't always visiting in a browser</strong>.</li>
+</ul>
+
+<p>Blogstrap puts forward markup languages that emphasise human readability, and
+serve html only when html is needed.</p>
+
+<ul>
+<li>
+<strong>HTML rendering should be done client-side</strong>.</li>
+</ul>
+
+<p>It doesn't make sense for your blog to hold both the markup file and its html
+counterpart. The repo hold the info once, the client can decide how to display
+it.</p>
+
+<h2>
+<a id="dependencies" class="anchor" href="#dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dependencies</h2>
+
+<p>Blogstrap depends on the following 2 projects:</p>
+
+<ul>
+<li><a href="http://flask.pocoo.org/">Flask</a></li>
+<li><a href="http://strapdownjs.com/">Strapdown.js</a></li>
+</ul>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<ul>
+<li>Available on PyPI:</li>
+</ul>
+
+<pre><code>pip install blogstrap
+</code></pre>
+
+<ul>
+<li>It's still changing fast so I recommend installing from source:</li>
+</ul>
+
+<pre><code>python setup.py install
+</code></pre>
+
+<p>It's recommended that you install Blogstrap inside a virtualenv or in a
+dedicated virtual machine (or cloud instance).</p>
+
+<h2>
+<a id="publish-a-blog-with-blogstrap" class="anchor" href="#publish-a-blog-with-blogstrap" aria-hidden="true"><span class="octicon octicon-link"></span></a>Publish a blog with Blogstrap</h2>
+
+<p>After installing Blogstrap on your machine, here's how you can use it for
+blogging. There are multiple ways to host and serve your Flask application, here
+I'm showing an example of how to do it with <code>gunicorn</code>.</p>
+
+<ul>
+<li>Create a new directory <code>articles</code>
+</li>
+<li>Inside that directory create a file called <code>wsgi.py</code>
+</li>
+</ul>
+
+<div class="highlight highlight-source-python"><pre><span class="pl-k">from</span> blogstrap.blogstrap <span class="pl-k">import</span> create_app
+application <span class="pl-k">=</span> create_app(<span class="pl-s"><span class="pl-pds">"</span>/path/to/articles/.blogstrap.conf<span class="pl-pds">"</span></span>)</pre></div>
+
+<ul>
+<li>Inside that directory create a file called <code>.blogstrap.conf</code>
+</li>
+</ul>
+
+<div class="highlight highlight-source-python"><pre>BLOGROOT<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>/path/to/articles<span class="pl-pds">"</span></span>
+BLOGTITLE<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>My super blog published with Blogstrap<span class="pl-pds">"</span></span>
+THEME<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>simplex<span class="pl-pds">"</span></span></pre></div>
+
+<ul>
+<li><p>Create a markdown file in <code>articles</code>. Call it <code>helloworld.md</code></p></li>
+<li><p>Serve it over the network:</p></li>
+</ul>
+
+<pre><code>$ gunicorn wsgi:application -b '0.0.0.0'
+</code></pre>
+
+<ul>
+<li><p>Open article in a web browser, at the location <code>http://&lt;gunicorn_address&gt;/heblloworld</code></p></li>
+<li><p>Note that you can use <code>curl</code> to get the markdown version</p></li>
+</ul>
+
+<pre><code>curl http://&lt;gunicorn_address&gt;/helloworld
+</code></pre>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
