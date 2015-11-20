@@ -1,4 +1,7 @@
-import exceptions
+import six
+
+if six.PY2:
+    from exceptions import IOError
 
 from flask import abort
 from flask import Flask
@@ -6,7 +9,7 @@ from flask import render_template
 from flask import request
 
 
-class ArticleNotFound(exceptions.IOError):
+class ArticleNotFound(IOError):
     pass
 
 
