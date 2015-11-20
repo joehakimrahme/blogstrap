@@ -1,3 +1,4 @@
+[![Build Status](https://api.travis-ci.org/joehakimrahme/blogstrap.png)](https://api.travis-ci.org/joehakimrahme/blogstrap)
 Blogstrap - A dumb blogging platform
 ====================================
 
