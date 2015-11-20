@@ -75,13 +75,13 @@ THEME="simplex"
 
 * Create a markdown file in `articles`. Call it `helloworld.md`
 
-*  Serve it over the network:
+* Serve it over the network:
 
 ```
 $ gunicorn wsgi:application -b '0.0.0.0'
 ```
 
-* Open article in a web browser, at the location `http://<gunicorn_address>/heblloworld`
+* Open article in a web browser, at the location `http://<gunicorn_address>/helloworld`
 
 * Note that you can use `curl` to get the markdown version
 
