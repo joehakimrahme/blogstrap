@@ -37,7 +37,10 @@ def create_app(config_file=None):
     @app.route("/<blogpost>")
     def serve_blog(blogpost):
         user_agent = request.headers.get('User-Agent')
-        iscurl = user_agent.lower().startswith('curl')
+        if user_agent:
+            iscurl = user_agent.lower().startswith('curl')
+        else:
+            iscurl = False
         root_directory = app.config['BLOGROOT']
         blogpost = "/".join((root_directory, blogpost))
         try:
