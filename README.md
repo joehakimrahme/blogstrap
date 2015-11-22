@@ -22,12 +22,15 @@ counterpart. The repo hold the info once, the client can decide how to display
 it.
 
 
-Dependencies
-------------
-
-Blogstrap depends on the following 2 projects:
+Hard Dependencies
+-----------------
 
 * [Flask](http://flask.pocoo.org/)
+
+Soft Dependencies
+-----------------
+Blogstrap uses strapdown's javascript files straight from their CDN.
+
 * [Strapdown.js](http://strapdownjs.com/)
 
 
@@ -50,41 +53,43 @@ It's recommended that you install Blogstrap inside a virtualenv or in a
 dedicated virtual machine (or cloud instance).
 
 
-Publish a blog with Blogstrap
+Creating a blog with Blogstrap
 -----------------------------
 
-After installing Blogstrap on your machine, here's how you can use it for
-blogging. There are multiple ways to host and serve your Flask application, here
-I'm showing an example of how to do it with `gunicorn`.
-
-* Create a new directory `articles`
-* Inside that directory create a file called `wsgi.py`
-
-```python
-from blogstrap.blogstrap import create_app
-application = create_app("/path/to/articles/.blogstrap.conf")
-```
-
-* Inside that directory create a file called `.blogstrap.conf`
-
-```python
-BLOGROOT="/path/to/articles"
-BLOGTITLE="My super blog published with Blogstrap"
-THEME="simplex"
-```
-
-* Create a markdown file in `articles`. Call it `helloworld.md`
-
-* Serve it over the network:
+* Initialize your blog using:
 
 ```
-$ gunicorn wsgi:application -b '0.0.0.0'
+$ blogstrap init --target blog
 ```
 
-* Open article in a web browser, at the location `http://<gunicorn_address>/helloworld`
+* Create a new article `helloworld.md` in `blog`.
+
+```markdown
+# My new blog!
+
+This is my new blog!
+```
+
+* Run the app in the development server
+
+```
+$ python blog/wsgi.py
+```
 
 * Note that you can use `curl` to get the markdown version
 
 ```
-curl http://<gunicorn_address>/helloworld
+curl http://127.0.0.1:5000/helloworld
 ```
+
+How do I publish my newly created blog?
+---------------------------------------
+
+Blogstrap is built on top of Flask and as such you can use any
+method that flask [supports](http://flask.pocoo.org/docs/0.10/deploying/).
+
+How do I configure my blog?
+---------------------------
+
+The initialization command created a `.blogstrap.conf` which you can
+adjust based on your needs.
