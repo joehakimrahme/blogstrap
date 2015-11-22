@@ -1,3 +1,4 @@
+import argparse
 import six
 
 if six.PY2:
@@ -7,6 +8,8 @@ from flask import abort
 from flask import Flask
 from flask import render_template
 from flask import request
+
+import builder
 
 
 class ArticleNotFound(IOError):
@@ -60,6 +63,26 @@ def create_app(config_file=None):
             abort(404)
     return app
 
-if __name__ == "__main__":
-        app = create_app('.blogstrap.conf')
-        app.run()
+
+def build_parser():
+    """Builds the argument parser."""
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(help='Blogstrap commands')
+
+    init_parser = subparsers.add_parser('init', help='Default')
+    init_parser.set_defaults(which='init')
+    init_parser.add_argument('-t', '--target',
+                             dest='target',
+                             type=str,
+                             default='.',
+                             help='Target folder to generate files in')
+
+    return parser
+
+
+def main():
+    args = build_parser().parse_args()
+    builder.build(args)
+
+if __name__ == '__main__':
+    main()
