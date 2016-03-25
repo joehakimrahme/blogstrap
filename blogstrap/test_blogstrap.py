@@ -50,6 +50,10 @@ class BlogstrapTest(unittest.TestCase):
         response = self.app.get(blogpost)
         self.assertEqual(404, response.status_code)
 
+    def test_get_nonexistent(self):
+        response = self.app.get("nonexistent")
+        self.assertEqual(404, response.status_code)
+
 
 if __name__ == '__main__':
     unittest.main()
