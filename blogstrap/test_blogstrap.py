@@ -42,5 +42,14 @@ class BlogstrapTest(unittest.TestCase):
         self.assertNotIn(b"SUCCESS", response.data)
         self.tempfile.close()
 
+    def test_get_hidden(self):
+        self.tempfile = tempfile.NamedTemporaryFile(
+            dir=".",
+            prefix=".blogstrap-test-")
+        blogpost = os.path.basename(self.tempfile.name)
+        response = self.app.get(blogpost)
+        self.assertEqual(404, response.status_code)
+
+
 if __name__ == '__main__':
     unittest.main()

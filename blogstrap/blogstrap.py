@@ -56,6 +56,8 @@ def create_app(config_file=None):
 
     @app.route("/<blogpost>")
     def serve_blog(blogpost):
+        if blogpost.startswith("."):
+            abort(404)
         user_agent = request.headers.get('User-Agent')
         if user_agent:
             iscurl = user_agent.lower().startswith('curl')
