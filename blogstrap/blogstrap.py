@@ -14,14 +14,10 @@
 #    under the License.
 import argparse
 import six
-
 if six.PY2:
     from exceptions import IOError
 
-from flask import abort
-from flask import Flask
-from flask import render_template
-from flask import request
+import flask
 
 import builder
 
@@ -47,7 +43,7 @@ class ArticleReader(object):
 
 
 def create_app(config_file=None):
-    app = Flask(__name__)
+    app = flask.Flask(__name__)
     app.config.from_pyfile(config_file)
 
     @app.route("/")
@@ -57,8 +53,8 @@ def create_app(config_file=None):
     @app.route("/<blogpost>")
     def serve_blog(blogpost):
         if blogpost.startswith("."):
-            abort(404)
-        user_agent = request.headers.get('User-Agent')
+            flask.abort(404)
+        user_agent = flask.request.headers.get('User-Agent')
         if user_agent:
             iscurl = user_agent.lower().startswith('curl')
         else:
@@ -70,13 +66,13 @@ def create_app(config_file=None):
                 if iscurl:
                     return article
                 else:
-                    return render_template("strapdown.html",
-                                           theme=app.config['THEME'],
-                                           text=article,
-                                           title=app.config['BLOGTITLE'])
+                    return flask.render_template("strapdown.html",
+                                                 theme=app.config['THEME'],
+                                                 text=article,
+                                                 title=app.config['BLOGTITLE'])
         except ArticleNotFound:
             # need better support for curl
-            abort(404)
+            flask.abort(404)
     return app
 
 
