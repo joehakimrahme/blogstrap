@@ -28,8 +28,7 @@ if __name__ == '__main__':
     application.run()
 """
 
-CONF_TEMPLATE = """
-BLOGROOT = "."
+CONF_TEMPLATE = """BLOGROOT = "articles"
 BLOGTITLE = "Generated with BloGstrap"
 THEME = "simplex"
 DEBUG = True
@@ -39,9 +38,13 @@ DEBUG = True
 def build(args):
     app_path = os.path.join(args.target, 'wsgi.py')
     conf_path = os.path.join(args.target, '.blogstrap.conf')
+    blogroot_path = os.path.join(args.target, "articles")
 
     if not os.path.exists(args.target):
         os.makedirs(args.target)
+
+    if not os.path.exists(blogroot_path):
+        os.makedirs(blogroot_path)
 
     with open(app_path, 'w') as f:
         f.write(APP_TEMPLATE)
