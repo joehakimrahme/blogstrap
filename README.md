@@ -7,8 +7,9 @@ Blogstrap is a simple blogging platform based on a few core principles:
 * **Version control management tools implement a lot of useful features for
   blogging**
 
-I want to publish my articles the same way I publish source code. Draft review
-and Pull Request follow the same workflow and the same tools should be reused.
+Blogstrap doesn't provide an admin application. Instead it expects the user to manage the underlying file system. It is recommended, but not required, to use version control systems which provide features like draft publishing (access control), code review, or history.
+
+I use git and it's worked well for me. So far.
 
 * **Readers aren't always visiting in a browser**.
 
@@ -19,7 +20,7 @@ serve html only when html is needed.
 
 It doesn't make sense for your blog to hold both the markup file and its html
 counterpart. The repo hold the info once, the client can decide how to display
-it.
+it. 
 
 
 Hard Dependencies
@@ -56,13 +57,26 @@ dedicated virtual machine (or cloud instance).
 Creating a blog with Blogstrap
 -----------------------------
 
-* Initialize your blog using:
+Initialize your blog using:
 
 ```
 $ blogstrap init --target blog
 ```
 
-* Create a new article `helloworld.md` in `blog`.
+This should generate some directories and files:
+
+```
+$ tree -a newblog
+newblog
+├── .blogstrap.conf
+├── articles
+└── wsgi.py
+
+1 directory, 2 files
+
+```
+
+Create a new article `helloworld.md` in `blog/articles/`.
 
 ```markdown
 # My new blog!
@@ -70,13 +84,13 @@ $ blogstrap init --target blog
 This is my new blog!
 ```
 
-* Run the app in the development server
+Run the app in the development server
 
 ```
-$ python blog/wsgi.py
+$ python newblog/wsgi.py
 ```
 
-* Note that you can use `curl` to get the markdown version
+Note that you can use `curl` to get the markdown version
 
 ```
 curl http://127.0.0.1:5000/helloworld
