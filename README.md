@@ -76,7 +76,7 @@ newblog
 
 ```
 
-Create a new article `helloworld.md` in `blog/articles/`.
+Create a new article `helloworld.md` in `newblog/articles/`.
 
 ```markdown
 # My new blog!
