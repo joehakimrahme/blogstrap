@@ -6,10 +6,13 @@ Blogstrap - A dumb blogging platform
 
 Blogstrap is a simple blogging platform based on a few core principles:
 
-* **Version control management tools implement a lot of useful features for
-  blogging**
+* **Version control management tools implement a lot of useful
+  features for blogging**
 
-Blogstrap doesn't provide an admin application. Instead it expects the user to manage the underlying file system. It is recommended, but not required, to use version control systems which provide features like draft publishing (access control), code review, or history.
+Blogstrap doesn't provide an admin application. Instead it expects the user to
+manage the underlying file system. It is recommended, but not required, to use
+version control systems which provide features like draft publishing (access
+control), code review, or history.
 
 I use git and it's worked well for me. So far.
 
@@ -25,16 +28,15 @@ counterpart. The repo hold the info once, the client can decide how to display
 it. 
 
 
-Hard Dependencies
+How does it work?
 -----------------
 
-* [Flask](http://flask.pocoo.org/)
+Blogstrap is a [Flask](http://flask.pocoo.org/) application that serves static
+files over the web. It serves raw Markdown files formatted to fit
+[Strapdown.js](http://strapdownjs.com/) requirements.
 
-Soft Dependencies
------------------
-Blogstrap uses strapdown's javascript files straight from their CDN.
-
-* [Strapdown.js](http://strapdownjs.com/)
+Strapdown.js is downloaded from their CDN and executes the Markdown2html
+conversion client side.
 
 
 Installation
@@ -78,7 +80,8 @@ newblog
 
 ```
 
-Create a new article `helloworld.md` in `newblog/articles/`.
+Create a new file `helloworld` inside the `articles` directory you've just
+created:
 
 ```markdown
 # My new blog!
@@ -86,13 +89,13 @@ Create a new article `helloworld.md` in `newblog/articles/`.
 This is my new blog!
 ```
 
-Run the app in the development server
+Run the app in the development server:
 
 ```
 $ python newblog/wsgi.py
 ```
 
-Note that you can use `curl` to get the markdown version
+Note that you can use `curl` to get the markdown version:
 
 ```
 curl http://127.0.0.1:5000/helloworld
@@ -102,10 +105,10 @@ How do I publish my newly created blog?
 ---------------------------------------
 
 Blogstrap is built on top of Flask and as such you can use any
-method that flask [supports](http://flask.pocoo.org/docs/0.10/deploying/).
+method that Flask [supports](http://flask.pocoo.org/docs/0.10/deploying/).
 
 How do I configure my blog?
 ---------------------------
 
 The initialization command created a `.blogstrap.conf` which you can
-adjust based on your needs.
+adjust based on your needs. The default 
