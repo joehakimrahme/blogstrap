@@ -19,8 +19,8 @@ project = u'Blogstrap'
 copyright = u'2016, Joe H. Rahme'
 author = u'Joe H. Rahme'
 
-version = '0.2'
-release = '0.2'
+version = '0.3.0'
+release = '0.3.0'
 
 language = None
 exclude_patterns = []
