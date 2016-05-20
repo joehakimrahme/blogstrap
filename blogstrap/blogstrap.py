@@ -42,9 +42,19 @@ class ArticleReader(object):
         pass
 
 
+class DefaultConfig(object):
+    DEBUG = True
+    BLOGROOT = "."
+    THEME = "simplex"
+    BLOGTITLE = "Powered by Blogstrap"
+
+
 def create_app(config_file=None):
     app = flask.Flask(__name__)
-    app.config.from_pyfile(config_file)
+    if config_file:
+        app.config.from_pyfile(config_file)
+    else:
+        app.config.from_object(DefaultConfig)
 
     @app.route("/")
     def nothing():

@@ -1,0 +1,22 @@
+fixtures:
+    - ArticlesFixture
+
+tests:
+
+    - name: SUCCESS test
+      GET: /
+      response_strings:
+          - SUCCESS
+
+    - name: get article
+      GET: /blogstrap-test
+      status: 200
+      verbose: True
+
+    - name: get hidden article
+      GET: /.blogstrap-test
+      status: 404
+
+    - name: get nonexistent article
+      GET: /nonexistent
+      status: 404
