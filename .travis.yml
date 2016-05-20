@@ -1,11 +1,11 @@
 language: python
 install:
   - pip install tox
-script: 
+script:
   - tox
 env:
   - TOXENV=pep8
   - TOXENV=py27
   - TOXENV=py33
   - TOXENV=py34
-  # travis support for py35 is still crappy...
+  - TOXENV=py35
