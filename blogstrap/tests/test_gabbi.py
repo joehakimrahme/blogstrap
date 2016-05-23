@@ -1,3 +1,5 @@
+# coding: utf-8
+
 # Copyright 2016 Joe H. Rahme <joehakimrahme@gmail.com>
 # All Rights Reserved.
 #
@@ -34,6 +36,16 @@ class ArticlesFixture(fixture.GabbiFixture):
     def stop_fixture(self):
         os.remove("blogstrap-test")
         os.remove(".blogstrap-test")
+
+
+class UnicodeFixture(fixture.GabbiFixture):
+    def start_fixture(self):
+        try:
+            a = open("blogstrap-test", "w")
+            a.write("Hello, 世界")
+            a.close()
+        except IOError:
+            pass
 
 
 def load_tests(loader, tests, pattern):

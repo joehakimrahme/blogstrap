@@ -16,6 +16,9 @@ import argparse
 import six
 if six.PY2:
     from exceptions import IOError
+    import sys
+    reload(sys)
+    sys.setdefaultencoding('utf-8')
 
 import flask
 
