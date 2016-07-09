@@ -17,12 +17,15 @@ import six
 if six.PY2:
     from exceptions import IOError
     import sys
-    reload(sys)
+    reload(sys)  # noqa
     sys.setdefaultencoding('utf-8')
 
 import flask
 
-import builder
+if six.PY2:
+    import builder
+else:
+    import blogstrap.builder as builder
 
 
 class ArticleNotFound(IOError):
