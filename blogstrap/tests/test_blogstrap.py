@@ -23,7 +23,7 @@ class BlogstrapTest(unittest.TestCase):
 
     def setUp(self):
         super(BlogstrapTest, self).setUp()
-        application = blogstrap.create_app(".blogstrap.conf")
+        application = blogstrap.create_app()
         self.app = application.test_client()
 
     def test_success(self):
