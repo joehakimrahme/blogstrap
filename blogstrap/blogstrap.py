@@ -27,8 +27,14 @@ if six.PY2:
 else:
     import blogstrap.builder as builder
 
+import mimerender
+
 
 class ArticleNotFound(IOError):
+    pass
+
+
+class ArticleHidden(Exception):
     pass
 
 
@@ -54,6 +60,12 @@ class DefaultConfig(object):
     THEME = "simplex"
     BLOGTITLE = "Powered by Blogstrap"
 
+# Registering markdown as a valid MIME.
+# More info: https://tools.ietf.org/html/rfc7763
+mimerender.register_mime('markdown', ('text/markdown',))
+
+mimerender = mimerender.FlaskMimeRender()
+
 
 def create_app(config_file=None):
     app = flask.Flask(__name__)
@@ -62,33 +74,47 @@ def create_app(config_file=None):
     else:
         app.config.from_object(DefaultConfig)
 
+    def render_html(message):
+        return flask.render_template("strapdown.html",
+                                     theme=app.config['THEME'],
+                                     text=message,
+                                     title=app.config['BLOGTITLE'])
+
+    def render_html_exception(exception):
+        return flask.render_template('404.html')
+
+    def render_markdown(message):
+        return message
+
+    def render_md_exception(exception):
+        return flask.render_template('404.md')
+
     @app.route("/")
     def nothing():
         return "SUCCESS"
 
     @app.route("/<blogpost>")
+    @mimerender.map_exceptions(
+        mapping=(
+            (ArticleNotFound, '404 Article Not Found'),
+            (ArticleHidden, '404 Article Hidden'),
+        ),
+        default='markdown',
+        markdown=render_md_exception,
+        html=render_html_exception,
+    )
+    @mimerender(
+        default='markdown',
+        html=render_html,
+        markdown=render_markdown)
     def serve_blog(blogpost):
         if blogpost.startswith("."):
-            flask.abort(404)
-        user_agent = flask.request.headers.get('User-Agent')
-        if user_agent:
-            iscurl = user_agent.lower().startswith('curl')
-        else:
-            iscurl = False
+            raise ArticleHidden()
         root_directory = app.config['BLOGROOT']
         blogpost = "/".join((root_directory, blogpost))
-        try:
-            with ArticleReader(blogpost) as article:
-                if iscurl:
-                    return article
-                else:
-                    return flask.render_template("strapdown.html",
-                                                 theme=app.config['THEME'],
-                                                 text=article,
-                                                 title=app.config['BLOGTITLE'])
-        except ArticleNotFound:
-            # need better support for curl
-            flask.abort(404)
+        with ArticleReader(blogpost) as article:
+            return {'message': article}
+
     return app
 
 

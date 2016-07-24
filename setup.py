@@ -31,7 +31,7 @@ setup(
     packages=['blogstrap'],
     include_package_data=True,
     zip_safe=False,
-    install_requires=['Flask', 'six'],
+    install_requires=['Flask', 'mimerender', 'six'],
 
     entry_points={
         'console_scripts': [

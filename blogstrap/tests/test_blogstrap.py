@@ -32,7 +32,6 @@ class BlogstrapTest(unittest.TestCase):
         self.assertIn(b"SUCCESS", response.data)
 
     def test_get_article(self):
-        # Create a tempfile and GET its url
         self.tempfile = tempfile.NamedTemporaryFile(
             dir=".",
             prefix="blogstrap-test-")
@@ -40,18 +39,48 @@ class BlogstrapTest(unittest.TestCase):
         response = self.app.get(blogpost)
         self.assertEqual(200, response.status_code)
         self.assertNotIn(b"SUCCESS", response.data)
+        # default type is markdown, so we shouldn't get 'html'
+        self.assertNotIn(b'html', response.data)
+
+    def test_get_html_article(self):
+        self.tempfile = tempfile.NamedTemporaryFile(
+            dir=".",
+            prefix="blogstrap-test-")
+        blogpost = os.path.basename(self.tempfile.name)
+        response = self.app.get(blogpost, headers={'Accept': 'text/html'})
+        self.assertEqual(200, response.status_code)
+        self.assertNotIn(b"SUCCESS", response.data)
+        self.assertIn(b'html', response.data)
 
     def test_get_hidden(self):
+        # files starting with '.' are off limit
         self.tempfile = tempfile.NamedTemporaryFile(
             dir=".",
             prefix=".blogstrap-test-")
         blogpost = os.path.basename(self.tempfile.name)
         response = self.app.get(blogpost)
         self.assertEqual(404, response.status_code)
+        self.assertNotIn(b'html', response.data)
+
+    def test_get_html_hidden(self):
+        self.tempfile = tempfile.NamedTemporaryFile(
+            dir=".",
+            prefix=".blogstrap-test-")
+        blogpost = os.path.basename(self.tempfile.name)
+        response = self.app.get(blogpost, headers={'Accept': 'text/html'})
+        self.assertEqual(404, response.status_code)
+        self.assertIn(b'html', response.data)
 
     def test_get_nonexistent(self):
         response = self.app.get("nonexistent")
         self.assertEqual(404, response.status_code)
+        self.assertNotIn(b'html', response.data)
+
+    def test_get_html_nonexistent(self):
+        response = self.app.get("nonexistent", headers={
+            'Accept': 'text/html'})
+        self.assertEqual(404, response.status_code)
+        self.assertIn(b'html', response.data)
 
 
 if __name__ == '__main__':
