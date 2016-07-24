@@ -13,6 +13,9 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 import argparse
+
+import flask
+import mimerender
 import six
 if six.PY2:
     from exceptions import IOError
@@ -20,14 +23,9 @@ if six.PY2:
     reload(sys)  # noqa
     sys.setdefaultencoding('utf-8')
 
-import flask
-
-if six.PY2:
     import builder
 else:
     import blogstrap.builder as builder
-
-import mimerender
 
 
 class ArticleNotFound(IOError):
