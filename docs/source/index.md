@@ -16,16 +16,14 @@ control), code review, or history.
 
 I use git and it's worked well for me. So far.
 
-* **Readers aren't always visiting in a browser**.
+* **HTML belongs in the browser only**.
 
-Blogstrap puts forward markup languages that emphasise human readability, and
-serve html only when html is needed.
-
-* **HTML rendering should be done client-side**.
-
-It doesn't make sense for your blog to hold both the markup file and its html
-counterpart. The repo hold the info once, the client can decide how to display
-it. 
+HTML is a format that belongs only inside the browser. There's no reason to
+generate, store or serve HTML outside it. Unless specifically requested,
+Blogstrap will generally serve raw markdown content. However if the client
+requests HTML (with the `Accept: text/html` header, all popular browsers use
+this by default), Blogstrap will serve a Javascript library along the markdown
+content so that the html conversion is done on the client side.
 
 
 How does it work?
@@ -35,8 +33,8 @@ Blogstrap is a [Flask](http://flask.pocoo.org/) application that serves static
 files over the web. It serves raw Markdown files formatted to fit
 [Strapdown.js](http://strapdownjs.com/) requirements.
 
-Strapdown.js is downloaded from their CDN and executes the Markdown2html
-conversion client side.
+Strapdown.js is downloaded from their CDN and executes the HTML conversion
+client side.
 
 
 Installation
@@ -111,4 +109,4 @@ How do I configure my blog?
 ---------------------------
 
 The initialization command created a `.blogstrap.conf` which you can
-adjust based on your needs. The default 
+adjust based on your needs.
