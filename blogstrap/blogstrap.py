@@ -57,6 +57,7 @@ class DefaultConfig(object):
     BLOGROOT = "."
     THEME = "simplex"
     BLOGTITLE = "Powered by Blogstrap"
+    HOMEPAGE_MESSAGE = "SUCCESS"
 
 # Registering markdown as a valid MIME.
 # More info: https://tools.ietf.org/html/rfc7763
@@ -89,7 +90,7 @@ def create_app(config_file=None):
 
     @app.route("/")
     def nothing():
-        return "SUCCESS"
+        return app.config['HOMEPAGE_MESSAGE']
 
     @app.route("/<blogpost>")
     @mimerender.map_exceptions(

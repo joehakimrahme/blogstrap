@@ -24,12 +24,14 @@ class BlogstrapTest(unittest.TestCase):
     def setUp(self):
         super(BlogstrapTest, self).setUp()
         application = blogstrap.create_app()
+        self.config = application.config
         self.app = application.test_client()
 
     def test_success(self):
         # This is just a base test
         response = self.app.get("/")
-        self.assertIn(b"SUCCESS", response.data)
+        self.assertEqual(self.config['HOMEPAGE_MESSAGE'],
+                         response.data.decode('utf-8'))
 
     def test_get_article(self):
         self.tempfile = tempfile.NamedTemporaryFile(
