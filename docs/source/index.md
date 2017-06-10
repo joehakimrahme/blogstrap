@@ -62,7 +62,7 @@ Creating a blog with Blogstrap
 Initialize your blog using:
 
 ```
-$ blogstrap init --target blog
+$ blogstrap init --target newblog
 ```
 
 This should generate some directories and files:
@@ -70,15 +70,34 @@ This should generate some directories and files:
 ```
 $ tree -a newblog
 newblog
-├── .blogstrap.conf
-├── articles
-└── wsgi.py
+└── .blogstrap
+    ├── blogstrap.conf
+    └── wsgi.py
 
 1 directory, 2 files
 
+
 ```
 
-Create a new file `helloworld` inside the `articles` directory you've just
+If the directory `newblog` doesn't exist, it will create it, then
+generate a couple of default configuration files in a `.blogstrap`
+directory. `wsgi.py` is the WSGI entry point to your blog, you shouldn't
+worry about modifying it. But let's look at the content of `blogstrap.conf`:
+
+```
+# Placeholder for now.
+HOMEPAGE_MESSAGE="BLOGSTRAP ON"
+# The path of a directory that holds the markdown articles
+BLOGROOT = "/tmp/newblog"
+# The title will be added to the top banner in every page
+BLOGTITLE = "Generated with BlogStrap"
+# Find out which themes are available here: http://strapdownjs.com/
+THEME = "simplex"
+# Make the app more verbose when necessary. Don't use in production.
+DEBUG = True
+```
+
+Create a new file `helloworld` inside the `newblog` directory you've just
 created:
 
 ```markdown
@@ -93,20 +112,18 @@ Run the app in the development server:
 $ python newblog/wsgi.py
 ```
 
-Note that you can use `curl` to get the markdown version:
+You can now access the article using `curl`:
 
 ```
 curl http://127.0.0.1:5000/helloworld
 ```
 
+Note that if you access `httpL//127.0.0.1:5000/helloworld` Blogstrap
+will generate an html version of the article.
+
+
 How do I publish my newly created blog?
 ---------------------------------------
 
 Blogstrap is built on top of Flask and as such you can use any
-method that Flask [supports](http://flask.pocoo.org/docs/0.10/deploying/).
-
-How do I configure my blog?
----------------------------
-
-The initialization command created a `.blogstrap.conf` which you can
-adjust based on your needs.
+method that Flask [supports](http://flask.pocoo.org/docs/0.10/deploy).

@@ -31,7 +31,7 @@ if __name__ == '__main__':
 CONF_TEMPLATE = """# Placeholder for now.
 HOMEPAGE_MESSAGE="BLOGSTRAP ON"
 # The path of a directory that holds the markdown articles
-BLOGROOT = ".."
+BLOGROOT = "BLGRT"
 # The title will be added to the top banner in every page
 BLOGTITLE = "Generated with BlogStrap"
 # Find out which themes are available here: http://strapdownjs.com/
@@ -56,4 +56,7 @@ def build(args):
         f.write(APP_TEMPLATE)
 
     with open(conf_path, 'w') as f:
-        f.write(CONF_TEMPLATE)
+        # Before writing the template to disk, we fill in the blogroot's
+        # absolute path
+        full_target = os.path.abspath(args.target)
+        f.write(CONF_TEMPLATE.replace("BLGRT", full_target))
