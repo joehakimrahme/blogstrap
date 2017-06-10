@@ -59,10 +59,10 @@ class DefaultConfig(object):
     BLOGTITLE = "Powered by Blogstrap"
     HOMEPAGE_MESSAGE = "SUCCESS"
 
+
 # Registering markdown as a valid MIME.
 # More info: https://tools.ietf.org/html/rfc7763
 mimerender.register_mime('markdown', ('text/markdown',))
-
 mimerender = mimerender.FlaskMimeRender()
 
 
@@ -136,6 +136,7 @@ def build_parser():
 def main():
     args = build_parser().parse_args()
     builder.build(args)
+
 
 if __name__ == '__main__':
     main()

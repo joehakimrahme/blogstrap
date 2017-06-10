@@ -22,16 +22,16 @@ from blogstrap import create_app
 BASE = os.path.dirname(os.path.abspath(__file__))
 config = lambda x: os.path.join(BASE, x)
 
-application = create_app(config('.blogstrap.conf'))
+application = create_app(config('blogstrap.conf'))
 
 if __name__ == '__main__':
     application.run()
 """
 
-CONF_TEMPLATE = """# The domain name of your blog
-SERVERNAME=""
+CONF_TEMPLATE = """# Placeholder for now.
+HOMEPAGE_MESSAGE="BLOGSTRAP ON"
 # The path of a directory that holds the markdown articles
-BLOGROOT = "articles"
+BLOGROOT = ".."
 # The title will be added to the top banner in every page
 BLOGTITLE = "Generated with BlogStrap"
 # Find out which themes are available here: http://strapdownjs.com/
@@ -42,15 +42,15 @@ DEBUG = True
 
 
 def build(args):
-    app_path = os.path.join(args.target, 'wsgi.py')
-    conf_path = os.path.join(args.target, '.blogstrap.conf')
-    blogroot_path = os.path.join(args.target, "articles")
+    bstrp_conf_path = os.path.join(args.target, '.blogstrap')
+    app_path = os.path.join(bstrp_conf_path, 'wsgi.py')
+    conf_path = os.path.join(bstrp_conf_path, 'blogstrap.conf')
 
     if not os.path.exists(args.target):
         os.makedirs(args.target)
 
-    if not os.path.exists(blogroot_path):
-        os.makedirs(blogroot_path)
+    if not os.path.exists(bstrp_conf_path):
+        os.makedirs(bstrp_conf_path)
 
     with open(app_path, 'w') as f:
         f.write(APP_TEMPLATE)
