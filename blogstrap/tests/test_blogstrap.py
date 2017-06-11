@@ -84,6 +84,25 @@ class BlogstrapTest(unittest.TestCase):
         self.assertEqual(404, response.status_code)
         self.assertIn(b'html', response.data)
 
+    def test_overshadow(self):
+        self.tempfile = tempfile.NamedTemporaryFile(
+            dir=".",
+            prefix="blogstrap-test-")
+        html_filename = self.tempfile.name + ".html"
+        with open(html_filename, "w") as f:
+            f.write("htmltest")
+        markdown_filename = self.tempfile.name + ".md"
+        with open(markdown_filename, "w") as f:
+            f.write("markdowntest")
+        blogpost = os.path.basename(self.tempfile.name)
+
+        response = self.app.get(blogpost, headers={'Accept': 'text/html'})
+        self.assertIn(b'htmltest', response.data)
+        response = self.app.get(blogpost, headers={'Accept': 'text/markdown'})
+        self.assertIn(b'markdowntest', response.data)
+        response = self.app.get(blogpost)
+        self.assertIn(b'markdowntest', response.data)
+
 
 if __name__ == '__main__':
     unittest.main()

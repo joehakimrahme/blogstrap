@@ -80,9 +80,9 @@ newblog
 ```
 
 If the directory `newblog` doesn't exist, it will create it, then
-generate a couple of default configuration files in a `.blogstrap`
+generate a couple of default configuration files inside a `.blogstrap`
 directory. `wsgi.py` is the WSGI entry point to your blog, you shouldn't
-worry about modifying it. But let's look at the content of `blogstrap.conf`:
+worry about modifying it. But take a look at the content of `blogstrap.conf`:
 
 ```
 # Placeholder for now.
@@ -118,12 +118,55 @@ You can now access the article using `curl`:
 curl http://127.0.0.1:5000/helloworld
 ```
 
-Note that if you access `httpL//127.0.0.1:5000/helloworld` Blogstrap
-will generate an html version of the article.
+Note that if you access `http://127.0.0.1:5000/helloworld` from your
+web browser, Blogstrap will generate an html version of the article.
 
+
+Features
+----------
+
+* **Hidden files**: Blogstrap will return a 404 if requesting an
+  article with a filename starting with `.`. This should allow you to
+  commit dot configuration files like `.git` or `.gitconfig`. without
+  fearing them getting accessed.
+
+* **Overshadow**: Makes it possible to serve different content for
+  markdown and html. If a file exists with the same name and
+  `.html`/`.md` suffix, it will be served in priority when requested.
+
+**Examples**:
+
+```.
+├── article
+└── article.html
+```
+
+If `text/html` is requested then `article.html` will be served.
+`article` will be served in any other case.
+
+```.
+├── article
+└── article.md
+```
+
+In this case, if `text/html` is requested then `article` will be
+served. `article.md` will be served in any other case.
+
+```.
+├── article
+├── article.html
+└── article.md
+```
+
+In this case, `article` will never be served.
 
 How do I publish my newly created blog?
 ---------------------------------------
 
-Blogstrap is built on top of Flask and as such you can use any
-method that Flask [supports](http://flask.pocoo.org/docs/0.10/deploy).
+A Blogstrap blog is most likely going to be a source code repository
+and should be distributed as such. Readers can download Blogstrap
+locally in case they want to read it in their browser.
+
+It's still possible to host your own instance of Blogstrap over the
+web. Since it is built on top of Flask you can use any method that
+Flask [supports](http://flask.pocoo.org/docs/0.10/deploy).

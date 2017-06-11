@@ -13,6 +13,7 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 import argparse
+import os
 
 import flask
 import mimerender
@@ -112,7 +113,19 @@ def create_app(config_file=None):
         if blogpost.startswith("."):
             raise ArticleHidden()
         root_directory = app.config['BLOGROOT']
+
         blogpost = "/".join((root_directory, blogpost))
+        accept_header = flask.request.headers.get('Accept', [])
+        suffix = ""
+        if "text/html" in accept_header:
+            if os.path.exists(blogpost + ".html"):
+                suffix = ".html"
+        else:
+            if os.path.exists(blogpost + ".md"):
+                suffix = ".md"
+
+        blogpost += suffix
+
         with ArticleReader(blogpost) as article:
             return {'message': article}
 
