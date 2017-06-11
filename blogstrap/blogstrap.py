@@ -80,7 +80,9 @@ def create_app(config_file=None):
                                      title=app.config['BLOGTITLE'])
 
     def render_html_exception(exception):
-        return flask.render_template('404.html')
+        return flask.render_template('404.html',
+                                     theme=app.config['THEME'],
+                                     title=app.config['BLOGTITLE'])
 
     def render_markdown(message):
         return message
