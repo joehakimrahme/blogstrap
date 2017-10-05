@@ -136,22 +136,34 @@ def build_parser():
     """Builds the argument parser."""
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(help='Blogstrap commands')
-
     init_parser = subparsers.add_parser('init', help='Default')
-    init_parser.set_defaults(which='init')
+    init_parser.set_defaults(func=init)
     init_parser.add_argument('-t', '--target',
                              dest='target',
                              type=str,
                              default='.',
                              help='Target folder to generate files in')
+    run_parser = subparsers.add_parser(
+        'run', help="Run the Flask development server")
+    run_parser.set_defaults(func=run)
+    run_parser.add_argument('-c', '--config',
+                            dest='config',
+                            type=str,
+                            default=None,
+                            help='path to a config file')
 
     return parser
 
 
 def main():
     args = build_parser().parse_args()
+    args.func(args)
+
+
+def init(args):
     builder.build(args)
 
 
-if __name__ == '__main__':
-    main()
+def run(args):
+    application = create_app(args.config)
+    application.run()
