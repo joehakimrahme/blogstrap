@@ -12,6 +12,7 @@
 #    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 #    License for the specific language governing permissions and limitations
 #    under the License.
+import os
 import os.path
 import tempfile
 import unittest
@@ -102,6 +103,10 @@ class BlogstrapTest(unittest.TestCase):
         self.assertIn(b'markdowntest', response.data)
         response = self.app.get(blogpost)
         self.assertIn(b'markdowntest', response.data)
+
+        # deleting the extra files
+        os.remove(html_filename)
+        os.remove(markdown_filename)
 
 
 if __name__ == '__main__':
