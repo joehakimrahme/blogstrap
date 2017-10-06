@@ -31,9 +31,9 @@ How does it work?
 
 Blogstrap is a [Flask](http://flask.pocoo.org/) application that serves static
 files over the web. It serves raw Markdown files formatted to fit
-[Strapdown.js](http://strapdownjs.com/) requirements.
+[Strapdown-Zeta](http://strapdown.ztx.io/) requirements.
 
-Strapdown.js is downloaded from their CDN and executes the HTML conversion
+Strapdown-Zeta is downloaded from their CDN and executes the HTML conversion
 client side.
 
 

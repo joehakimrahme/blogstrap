@@ -12,7 +12,7 @@
 #    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 #    License for the specific language governing permissions and limitations
 #    under the License.
-"""A dumb blogging platform based on Strapdown.js
+"""A dumb blogging platform based on Strapdown-Zeta
 """
 
 from setuptools import setup
@@ -23,10 +23,10 @@ setup(
     name='Blogstrap',
     author="Joe H. Rahme",
     author_email="joehakimrahme@gmail.com",
-    version='0.4.0',
-    description="A dumb blogging platform based on Strapdown.js",
+    version='0.5.0',
+    description="A dumb blogging platform based on Strapdown-Zeta",
     url=repo_url,
-    download_url=repo_url + "/tarball/0.4.0",
+    download_url=repo_url + "/tarball/0.5.0",
     long_description=__doc__,
     packages=['blogstrap'],
     include_package_data=True,
