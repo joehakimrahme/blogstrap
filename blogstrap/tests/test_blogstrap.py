@@ -24,15 +24,13 @@ class BlogstrapTest(unittest.TestCase):
 
     def setUp(self):
         super(BlogstrapTest, self).setUp()
-        application = blogstrap.create_app()
-        self.config = application.config
-        self.app = application.test_client()
+        self.application = blogstrap.create_app()
+        self.config = self.application.config
+        self.app = self.application.test_client()
 
-    def test_success(self):
-        # This is just a base test
+    def test_root(self):
         response = self.app.get("/")
-        self.assertEqual(self.config['HOMEPAGE_MESSAGE'],
-                         response.data.decode('utf-8'))
+        self.assertEqual(204, response.status_code)
 
     def test_get_article(self):
         self.tempfile = tempfile.NamedTemporaryFile(
@@ -120,6 +118,18 @@ class BlogstrapTest(unittest.TestCase):
         response = self.app.get(blogpost)
         self.assertEqual(200, response.status_code)
         self.assertNotIn(b"SUCCESS", response.data)
+
+    def test_landing_page(self):
+        self.tempfile = tempfile.NamedTemporaryFile(
+            dir=".",
+            prefix="blogstrap-test-landing-")
+        self.application.config['LANDING_PAGE'] = os.path.basename(
+            self.tempfile.name)
+        response = self.app.get("/")
+        self.assertEqual(302, response.status_code)
+        self.assertIn('Location', response.headers)
+        response = self.app.get(response.headers['Location'])
+        self.assertEqual(200, response.status_code)
 
 
 if __name__ == '__main__':

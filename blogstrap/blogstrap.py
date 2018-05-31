@@ -58,7 +58,6 @@ class DefaultConfig(object):
     BLOGROOT = "."
     THEME = "simplex"
     BLOGTITLE = "Powered by Blogstrap"
-    HOMEPAGE_MESSAGE = "SUCCESS"
 
 
 # Registering markdown as a valid MIME.
@@ -93,7 +92,12 @@ def create_app(config_file=None):
 
     @app.route("/")
     def nothing():
-        return app.config['HOMEPAGE_MESSAGE']
+        if 'LANDING_PAGE' in app.config:
+            return flask.redirect(
+                flask.url_for('serve_blog',
+                              blogpost=app.config['LANDING_PAGE']))
+        # no homepage defined return HTTP 204 No Content
+        return ('', 204)
 
     @app.route("/<blogpost>", strict_slashes=False)
     @mimerender.map_exceptions(
