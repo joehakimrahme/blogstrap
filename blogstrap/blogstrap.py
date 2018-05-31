@@ -93,6 +93,9 @@ def create_app(config_file=None):
 
     @app.route("/")
     def nothing():
+        if app.config['HOMEPAGE']:
+            return flask.redirect(
+                flask.url_for('serve_blog', blogpost=app.config['HOMEPAGE']))
         return app.config['HOMEPAGE_MESSAGE']
 
     @app.route("/<blogpost>", strict_slashes=False)
