@@ -108,6 +108,19 @@ class BlogstrapTest(unittest.TestCase):
         os.remove(html_filename)
         os.remove(markdown_filename)
 
+    def test_trailing_slashe(self):
+        self.tempfile = tempfile.NamedTemporaryFile(
+            dir=".",
+            prefix="blogstrap-test-")
+        blogpost = os.path.basename(self.tempfile.name)
+        response = self.app.get(blogpost)
+        self.assertEqual(200, response.status_code)
+        self.assertNotIn(b"SUCCESS", response.data)
+        blogpost = os.path.basename(self.tempfile.name) + "/"
+        response = self.app.get(blogpost)
+        self.assertEqual(200, response.status_code)
+        self.assertNotIn(b"SUCCESS", response.data)
+
 
 if __name__ == '__main__':
     unittest.main()

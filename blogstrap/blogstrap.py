@@ -95,7 +95,7 @@ def create_app(config_file=None):
     def nothing():
         return app.config['HOMEPAGE_MESSAGE']
 
-    @app.route("/<blogpost>")
+    @app.route("/<blogpost>", strict_slashes=False)
     @mimerender.map_exceptions(
         mapping=(
             (ArticleNotFound, '404 Article Not Found'),
