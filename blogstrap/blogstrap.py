@@ -147,6 +147,11 @@ def build_parser():
                              type=str,
                              default='.',
                              help='Target folder to generate files in')
+    init_parser.add_argument('--no-landing-page',
+                             action='store_true',
+                             default=False,
+                             help='if specified, no landing pages will be'
+                             ' created')
     run_parser = subparsers.add_parser(
         'run', help="Run the Flask development server")
     run_parser.set_defaults(func=run)

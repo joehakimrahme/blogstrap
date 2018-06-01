@@ -28,9 +28,7 @@ if __name__ == '__main__':
     application.run()
 """
 
-CONF_TEMPLATE = """# Placeholder for now.
-HOMEPAGE_MESSAGE="BLOGSTRAP ON"
-# The path of a directory that holds the markdown articles
+CONF_TEMPLATE = """# The path of a directory that holds the markdown articles
 BLOGROOT = "BLGRT"
 # The title will be added to the top banner in every page
 BLOGTITLE = "Generated with BlogStrap"
@@ -38,6 +36,10 @@ BLOGTITLE = "Generated with BlogStrap"
 THEME = "simplex"
 # Make the app more verbose when necessary. Don't use in production.
 DEBUG = True
+"""
+
+LANDING_TEMPLATE = """# This page will be displayed at the blog root
+LANDING_PAGE = landing_blogstrap
 """
 
 
@@ -55,8 +57,16 @@ def build(args):
     with open(app_path, 'w') as f:
         f.write(APP_TEMPLATE)
 
+    if not args.no_landing_page:
+        config_template = CONF_TEMPLATE + LANDING_TEMPLATE
+        landing_path = os.path.join(args.target, "landing_blogstrap")
+        with open(landing_path, 'w') as f:
+            f.write("Hello Blogstrap!")
+    else:
+        config_template = CONF_TEMPLATE
+
     with open(conf_path, 'w') as f:
         # Before writing the template to disk, we fill in the blogroot's
         # absolute path
         full_target = os.path.abspath(args.target)
-        f.write(CONF_TEMPLATE.replace("BLGRT", full_target))
+        f.write(config_template.replace("BLGRT", full_target))
