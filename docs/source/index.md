@@ -56,8 +56,8 @@ It's recommended that you install Blogstrap inside a virtualenv or in a
 dedicated virtual machine (or cloud instance).
 
 
-Creating a blog with Blogstrap
------------------------------
+Blogstrap Quickstart
+--------------------
 
 Initialize your blog using:
 
@@ -65,28 +65,36 @@ Initialize your blog using:
 $ blogstrap init --target newblog
 ```
 
-This should generate some directories and files:
+This will create the `newblog` directory if it doesn't exist, and use
+it as a root for your blog. It should generate a bunch of files.
 
 ```
 $ tree -a newblog
 newblog
-└── .blogstrap
-    ├── blogstrap.conf
-    └── wsgi.py
+├── .blogstrap
+│   ├── blogstrap.conf
+│   └── wsgi.py
+└── landing_blogstrap
 
-1 directory, 2 files
-
-
-```
-
-If the directory `newblog` doesn't exist, it will create it, then
-generate a couple of default configuration files inside a `.blogstrap`
-directory. `wsgi.py` is the WSGI entry point to your blog, you shouldn't
-worry about modifying it. But take a look at the content of `blogstrap.conf`:
+1 directory, 3 files
 
 ```
-# Placeholder for now.
-HOMEPAGE_MESSAGE="BLOGSTRAP ON"
+
+* **landing_blogstrap** is the first page in your blog and Blogstrap
+  is configured to serve it as your homepage.
+
+* **wsgi.py** is the WSGI entry point to your blog. If you don't know
+  what this is, it's the file required by web servers to locate your
+  content. In practice you will almost never need to modify it.
+
+* **blogstrap.conf** holds the configuration options to manage aspects
+  of Blogstra behavior.
+
+
+Let's take a closer look at the config file:
+
+```
+$ cat newblog/.blogstrap/blogstrap.conf
 # The path of a directory that holds the markdown articles
 BLOGROOT = "/tmp/newblog"
 # The title will be added to the top banner in every page
@@ -95,10 +103,12 @@ BLOGTITLE = "Generated with BlogStrap"
 THEME = "simplex"
 # Make the app more verbose when necessary. Don't use in production.
 DEBUG = True
+# This page will be displayed at the blog root
+LANDING_PAGE = landing_blogstrap
 ```
 
-Create a new file `helloworld` inside the `newblog` directory you've just
-created:
+Now let's add an article. Create a new file `helloworld` inside the
+`newblog` directory you've just created:
 
 ```markdown
 # My new blog!
@@ -123,7 +133,7 @@ web browser, Blogstrap will generate an html version of the article.
 
 
 Features
-----------
+--------
 
 * **Hidden files**: Blogstrap will return a 404 if requesting an
   article with a filename starting with `.`. This should allow you to
@@ -134,9 +144,10 @@ Features
   markdown and html. If a file exists with the same name and
   `.html`/`.md` suffix, it will be served in priority when requested.
 
-**Examples**:
+**Overshadow Examples**:
 
-```.
+```
+.
 ├── article
 └── article.html
 ```
@@ -144,7 +155,8 @@ Features
 If `text/html` is requested then `article.html` will be served.
 `article` will be served in any other case.
 
-```.
+```
+.
 ├── article
 └── article.md
 ```
@@ -152,7 +164,8 @@ If `text/html` is requested then `article.html` will be served.
 In this case, if `text/html` is requested then `article` will be
 served. `article.md` will be served in any other case.
 
-```.
+```
+.
 ├── article
 ├── article.html
 └── article.md
