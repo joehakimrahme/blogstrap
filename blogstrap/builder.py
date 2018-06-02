@@ -38,8 +38,8 @@ THEME = "simplex"
 DEBUG = True
 """
 
-LANDING_TEMPLATE = """# This page will be displayed at the blog root
-LANDING_PAGE = landing_blogstrap
+HOMEPAGE_TEMPLATE = """# This page will be displayed at the blog root
+HOMEPAGE = homepage_blogstrap
 """
 
 
@@ -58,8 +58,8 @@ def build(args):
         f.write(APP_TEMPLATE)
 
     if not args.no_landing_page:
-        config_template = CONF_TEMPLATE + LANDING_TEMPLATE
-        landing_path = os.path.join(args.target, "landing_blogstrap")
+        config_template = CONF_TEMPLATE + HOMEPAGE_TEMPLATE
+        landing_path = os.path.join(args.target, "homepage_blogstrap")
         with open(landing_path, 'w') as f:
             f.write("Hello Blogstrap!")
     else:

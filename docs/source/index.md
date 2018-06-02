@@ -74,13 +74,13 @@ newblog
 ├── .blogstrap
 │   ├── blogstrap.conf
 │   └── wsgi.py
-└── landing_blogstrap
+└── homepage_blogstrap
 
 1 directory, 3 files
 
 ```
 
-* **landing_blogstrap** is the first page in your blog and Blogstrap
+* **homepage_blogstrap** is the first page in your blog and Blogstrap
   is configured to serve it as your homepage.
 
 * **wsgi.py** is the WSGI entry point to your blog. If you don't know
@@ -104,7 +104,7 @@ THEME = "simplex"
 # Make the app more verbose when necessary. Don't use in production.
 DEBUG = True
 # This page will be displayed at the blog root
-LANDING_PAGE = landing_blogstrap
+HOMEPAGE = homepage_blogstrap
 ```
 
 Now let's add an article. Create a new file `helloworld` inside the

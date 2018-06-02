@@ -92,10 +92,10 @@ def create_app(config_file=None):
 
     @app.route("/")
     def nothing():
-        if 'LANDING_PAGE' in app.config:
+        if 'HOMEPAGE' in app.config:
             return flask.redirect(
                 flask.url_for('serve_blog',
-                              blogpost=app.config['LANDING_PAGE']))
+                              blogpost=app.config['HOMEPAGE']))
         # no homepage defined return HTTP 204 No Content
         return ('', 204)
 
@@ -147,11 +147,10 @@ def build_parser():
                              type=str,
                              default='.',
                              help='Target folder to generate files in')
-    init_parser.add_argument('--no-landing-page',
+    init_parser.add_argument('--no-homepage',
                              action='store_true',
                              default=False,
-                             help='if specified, no landing pages will be'
-                             ' created')
+                             help='if specified, no homepage will be created')
     run_parser = subparsers.add_parser(
         'run', help="Run the Flask development server")
     run_parser.set_defaults(func=run)

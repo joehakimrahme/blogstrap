@@ -119,11 +119,11 @@ class BlogstrapTest(unittest.TestCase):
         self.assertEqual(200, response.status_code)
         self.assertNotIn(b"SUCCESS", response.data)
 
-    def test_landing_page(self):
+    def test_homepage(self):
         self.tempfile = tempfile.NamedTemporaryFile(
             dir=".",
-            prefix="blogstrap-test-landing-")
-        self.application.config['LANDING_PAGE'] = os.path.basename(
+            prefix="blogstrap-test-homepage-")
+        self.application.config['HOMEPAGE'] = os.path.basename(
             self.tempfile.name)
         response = self.app.get("/")
         self.assertEqual(302, response.status_code)
