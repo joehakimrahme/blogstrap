@@ -173,5 +173,20 @@ def init(args):
 
 
 def run(args):
-    application = create_app(args.config)
+    # identify which config file to use first
+    config = args.config
+
+    if config is not None:
+        # make sure any relative path is resolved relative to the
+        # current working dir
+        if not os.path.isabs(config):
+            config = os.path.join(os.getcwd(), config)
+    else:
+        # if no config file are defined on the cli, try to look for one
+        # in the default location ".blogstrap/blogstrap.conf"
+        default_config_path = os.path.join(os.getcwd(),
+                                           ".blogstrap/blogstrap.conf")
+        if os.path.exists(default_config_path):
+            config = default_config_path
+    application = create_app(config)
     application.run()
