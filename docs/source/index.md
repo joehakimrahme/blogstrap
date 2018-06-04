@@ -43,13 +43,13 @@ Installation
 * Available on PyPI:
 
 ```
-pip install blogstrap
+$ pip install blogstrap
 ```
 
 * It's still changing fast so I recommend installing from source:
 
 ```
-python setup.py install
+$ python setup.py install
 ```
 
 It's recommended that you install Blogstrap inside a virtualenv or in a
@@ -111,6 +111,7 @@ Now let's add an article. Create a new file `helloworld` inside the
 `newblog` directory you've just created:
 
 ```markdown
+$ cat helloworld
 # My new blog!
 
 This is my new blog!
@@ -119,17 +120,18 @@ This is my new blog!
 Run the app in the development server:
 
 ```
-$ python newblog/wsgi.py
+$ blogstrap run
 ```
 
 You can now access the article using `curl`:
 
 ```
-curl http://127.0.0.1:5000/helloworld
+$ curl http://127.0.0.1:5000/helloworld
 ```
 
 Note that if you access `http://127.0.0.1:5000/helloworld` from your
-web browser, Blogstrap will generate an html version of the article.
+web browser, Blogstrap will generate an html version of the article
+instead of the markdown version.
 
 
 Features
