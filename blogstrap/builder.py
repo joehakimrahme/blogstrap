@@ -32,8 +32,6 @@ CONF_TEMPLATE = """# The path of a directory that holds the markdown articles
 BLOGROOT = "BLGRT"
 # The title will be added to the top banner in every page
 BLOGTITLE = "Generated with BlogStrap"
-# Find out which themes are available here: http://strapdownjs.com/
-THEME = "simplex"
 # Make the app more verbose when necessary. Don't use in production.
 DEBUG = True
 """

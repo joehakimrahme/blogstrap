@@ -56,7 +56,6 @@ class ArticleReader(object):
 class DefaultConfig(object):
     DEBUG = True
     BLOGROOT = "."
-    THEME = "simplex"
     BLOGTITLE = "Powered by Blogstrap"
 
 
@@ -74,14 +73,12 @@ def create_app(config_file=None):
         app.config.from_object(DefaultConfig)
 
     def render_html(message):
-        return flask.render_template("strapdown.html",
-                                     theme=app.config['THEME'],
+        return flask.render_template("index.html",
                                      text=message,
                                      title=app.config['BLOGTITLE'])
 
     def render_html_exception(exception):
         return flask.render_template('404.html',
-                                     theme=app.config['THEME'],
                                      title=app.config['BLOGTITLE'])
 
     def render_markdown(message):

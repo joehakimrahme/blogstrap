@@ -29,12 +29,13 @@ content so that the html conversion is done on the client side.
 How does it work?
 -----------------
 
-Blogstrap is a [Flask](http://flask.pocoo.org/) application that serves static
-files over the web. It serves raw Markdown files formatted to fit
-[Strapdown-Zeta](http://strapdown.ztx.io/) requirements.
-
-Strapdown-Zeta is downloaded from their CDN and executes the HTML conversion
-client side.
+Blogstrap is a [Flask](https://flask.pocoo.org/) application that
+serves static files over the web. The files are expected to be written
+in markdown. If the client requests html explicitly, Blogstrap wraps
+the file in HTML tags, along with some javascript based on
+[Showdown.js](https://showdownjs.com/) to handle client-side conversion
+of the text into HTML, as well as some frontend artefacts based on
+[Bootstrap](https://getbootstrap.com) to make the page beautitful.
 
 
 Installation
@@ -99,8 +100,6 @@ $ cat newblog/.blogstrap/blogstrap.conf
 BLOGROOT = "/tmp/newblog"
 # The title will be added to the top banner in every page
 BLOGTITLE = "Generated with BlogStrap"
-# Find out which themes are available here: http://strapdownjs.com/
-THEME = "simplex"
 # Make the app more verbose when necessary. Don't use in production.
 DEBUG = True
 # This page will be displayed at the blog root

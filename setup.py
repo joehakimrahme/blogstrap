@@ -12,7 +12,7 @@
 #    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 #    License for the specific language governing permissions and limitations
 #    under the License.
-"""A dumb blogging platform based on Strapdown-Zeta
+"""An opinionated blogging platform
 """
 
 from setuptools import setup
@@ -24,7 +24,7 @@ setup(
     author="Joe H. Rahme",
     author_email="joehakimrahme@gmail.com",
     version='0.5.0',
-    description="A dumb blogging platform based on Strapdown-Zeta",
+    description="An opinionated blogging platform",
     url=repo_url,
     download_url=repo_url + "/tarball/0.5.0",
     long_description=__doc__,
