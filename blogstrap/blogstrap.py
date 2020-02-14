@@ -137,7 +137,9 @@ def build_parser():
     """Builds the argument parser."""
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(help='Blogstrap commands')
-    init_parser = subparsers.add_parser('init', help='Default')
+    init_parser = subparsers.add_parser(
+        'init',
+        help='Initialize the Blogstrap directory')
     init_parser.set_defaults(func=init)
     init_parser.add_argument('-t', '--target',
                              dest='target',

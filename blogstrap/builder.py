@@ -33,11 +33,11 @@ BLOGROOT = "BLGRT"
 # The title will be added to the top banner in every page
 BLOGTITLE = "Generated with BlogStrap"
 # Make the app more verbose when necessary. Don't use in production.
-DEBUG = True
+DEBUG = False
 """
 
 HOMEPAGE_TEMPLATE = """# This page will be displayed at the blog root
-HOMEPAGE = homepage_blogstrap
+HOMEPAGE = "homepage_blogstrap"
 """
 
 
@@ -55,11 +55,11 @@ def build(args):
     with open(app_path, 'w') as f:
         f.write(APP_TEMPLATE)
 
-    if not args.no_landing_page:
+    if not args.no_homepage:
         config_template = CONF_TEMPLATE + HOMEPAGE_TEMPLATE
         landing_path = os.path.join(args.target, "homepage_blogstrap")
         with open(landing_path, 'w') as f:
-            f.write("Hello Blogstrap!")
+            f.write("Hello Blogstrap!\n")
     else:
         config_template = CONF_TEMPLATE
 
