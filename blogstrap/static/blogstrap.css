@@ -1,15 +1,15 @@
+body {
+    visibility: hidden;
+}
 nav {
     background-color: #534b52;
 }
 .blogstrap {
-    /* padding-top: 4rem; */
     margin: 1rem;
 }
-
 .blogstrap h1 {
     padding-bottom: 2rem;
 }
-
 .blogstrap h2 {
     padding-top: 1rem;
 }
