@@ -5,5 +5,4 @@ script:
   - tox
 env:
   - TOXENV=pep8
-  - TOXENV=py27
-  - TOXENV=py34
+  - TOXENV=py3
