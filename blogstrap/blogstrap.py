@@ -40,14 +40,15 @@ class ArticleHidden(Exception):
 class ArticleReader(object):
 
     def __init__(self, path):
-        self.path = path
+        try:
+            with open(path) as f:
+                self.content = "".join(f.readlines())
+                self.metadata = {}
+        except IOError:
+            raise ArticleNotFound(path)
 
     def __enter__(self):
-        try:
-            with open(self.path) as f:
-                return ''.join(f.read())
-        except IOError:
-            raise ArticleNotFound(self.path)
+        return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         pass
@@ -74,15 +75,19 @@ def create_app(config_file=None):
 
     def render_html(message):
         return flask.render_template("index.html",
-                                     text=message,
-                                     title=app.config['BLOGTITLE'])
+                                     text=message['content'],
+                                     title=app.config['BLOGTITLE'],
+                                     **message['metadata'])
 
     def render_html_exception(exception):
         return flask.render_template('404.html',
                                      title=app.config['BLOGTITLE'])
 
     def render_markdown(message):
-        return message
+        return flask.render_template("index.md",
+                                     title=app.config['BLOGTITLE'],
+                                     text=message['content'],
+                                     **message['metadata'])
 
     def render_md_exception(exception):
         return flask.render_template('404.md')
@@ -128,8 +133,12 @@ def create_app(config_file=None):
         blogpost += suffix
 
         with ArticleReader(blogpost) as article:
-            return {'message': article}
-
+            return {
+                'message': {
+                    'content': article.content,
+                    'metadata': article.metadata,
+                }
+            }
     return app
 
 
