@@ -1,6 +1,7 @@
 var converter = new showdown.Converter({
   tables: true,
-  strikethrough: true
+  strikethrough: true,
+  simplifiedAutoLink: true,
 });
 
 window.onload = function () {
