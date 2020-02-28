@@ -11,7 +11,15 @@ nav {
     padding-bottom: 2rem;
 }
 .blogstrap h2 {
-    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+.blogstrap h3 {
+    color: #474448;
+    /* font-weight: bold; */
+    font-size: 24px;
+}
+.blogstrap p {
+    padding-bottom: 1rem;
 }
 .blogstrap pre {
     background-color: #e0ddcf;
