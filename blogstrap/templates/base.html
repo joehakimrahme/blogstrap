@@ -13,13 +13,13 @@
   <body class="bg-light">
     <nav class="navbar navbar-expand-md navbar-dark navbar-fixed-top">
       <a class="navbar-brand" href="#">{{ title | upper }}</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler">
 	<span class="navbar-toggler-icon"></span>
       </button>
     </nav>
-    <main role="main" class="container">
-      <div class="blogstrap">{% block content %}{% endblock %}
-      </div>
+    <main class="container">
+      <article class="blogstrap">{% block content %}{% endblock %}
+      </article>
     </main><!-- /.container -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

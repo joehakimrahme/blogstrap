@@ -27,3 +27,8 @@ nav {
     border: 1px;
     padding: 1em;
 }
+
+/* support for html5 elements in non-html5 browsers */
+article, aside, footer, header, nav, section {
+  display: block;
+}
