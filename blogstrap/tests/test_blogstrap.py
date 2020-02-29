@@ -25,6 +25,7 @@ class BlogstrapTest(unittest.TestCase):
     def setUp(self):
         super(BlogstrapTest, self).setUp()
         self.application = blogstrap.create_app()
+        self.application.config['TESTING'] = True
         self.config = self.application.config
         self.app = self.application.test_client()
 
