@@ -55,9 +55,12 @@ class ArticleReader(object):
 
 
 class DefaultConfig(object):
+    AUTHOR = "Blogstrap"
+    DESCRIPTION = "Powered By Blogstrap"
     DEBUG = True
     BLOGROOT = "."
     BLOGTITLE = "Powered by Blogstrap"
+    DEFAULT_LANG = "en"
 
 
 # Registering markdown as a valid MIME.
@@ -68,29 +71,38 @@ mimerender = mimerender.FlaskMimeRender()
 
 def create_app(config_file=None):
     app = flask.Flask(__name__)
+    app.config.from_object(DefaultConfig)
     if config_file:
         app.config.from_pyfile(config_file)
-    else:
-        app.config.from_object(DefaultConfig)
+
+    def _context(message=None):
+        context = {
+            "author": app.config['AUTHOR'],
+            "description": app.config['DESCRIPTION'],
+            "lang": app.config['DEFAULT_LANG'],
+            "title": app.config['BLOGTITLE']
+        }
+        if message:
+            context.update(message['metadata'])
+        return context
 
     def render_html(message):
         return flask.render_template("index.html",
                                      text=message['content'],
-                                     title=app.config['BLOGTITLE'],
-                                     **message['metadata'])
+                                     **_context(message))
 
     def render_html_exception(exception):
         return flask.render_template('404.html',
-                                     title=app.config['BLOGTITLE'])
+                                     **_context())
 
     def render_markdown(message):
         return flask.render_template("index.md",
-                                     title=app.config['BLOGTITLE'],
                                      text=message['content'],
-                                     **message['metadata'])
+                                     **_context(message))
 
     def render_md_exception(exception):
-        return flask.render_template('404.md')
+        return flask.render_template('404.md',
+                                     **_context())
 
     @app.route("/")
     def nothing():
@@ -131,7 +143,6 @@ def create_app(config_file=None):
                 suffix = ".md"
 
         blogpost += suffix
-
         with ArticleReader(blogpost) as article:
             return {
                 'message': {
