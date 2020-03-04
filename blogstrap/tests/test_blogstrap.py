@@ -132,6 +132,16 @@ class BlogstrapTest(unittest.TestCase):
         response = self.app.get(response.headers['Location'])
         self.assertEqual(200, response.status_code)
 
+    def test_toc(self):
+        self.tempfile = tempfile.NamedTemporaryFile(
+            dir=".",
+            prefix="blogstrap-test-")
+        with open(self.tempfile.name, "w") as f:
+            f.write("{{ toc }}")
+        blogpost = os.path.basename(self.tempfile.name)
+        response = self.app.get(blogpost)
+        self.assertNotIn(b"{{ toc }}", response.data)
+
 
 if __name__ == '__main__':
     unittest.main()

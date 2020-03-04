@@ -141,6 +141,10 @@ Features
   commit dot configuration files like `.git` or `.gitconfig`. without
   fearing them getting accessed.
 
+* **Page Variables**: Blogstrap presents page variables that can be
+  inserted in your articles. At the time of this writing only `{{ toc
+  }}` is available and gets replaced by a Table of Contents
+
 * **Overshadow**: Makes it possible to serve different content for
   markdown and html. If a file exists with the same name and
   `.html`/`.md` suffix, it will be served in priority when requested.

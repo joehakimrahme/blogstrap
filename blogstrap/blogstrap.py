@@ -25,8 +25,10 @@ if six.PY2:
     sys.setdefaultencoding('utf-8')
 
     import builder
+    import context
 else:
     import blogstrap.builder as builder
+    import blogstrap.context as context
 
 
 class ArticleNotFound(IOError):
@@ -75,34 +77,24 @@ def create_app(config_file=None):
     if config_file:
         app.config.from_pyfile(config_file)
 
-    def _context(message=None):
-        context = {
-            "author": app.config['AUTHOR'],
-            "description": app.config['DESCRIPTION'],
-            "lang": app.config['DEFAULT_LANG'],
-            "title": app.config['BLOGTITLE']
-        }
-        if message:
-            context.update(message['metadata'])
-        return context
+    def _render(template, message=None):
+        ctx = context.context(app, message)
+        result = flask.render_template(template, **ctx)
+        for k, v in ctx.items():
+            result = result.replace("{{ %s }}" % k, v)
+        return result
 
     def render_html(message):
-        return flask.render_template("index.html",
-                                     text=message['content'],
-                                     **_context(message))
+        return _render("index.html", message)
 
     def render_html_exception(exception):
-        return flask.render_template('404.html',
-                                     **_context())
+        return _render("404.html")
 
     def render_markdown(message):
-        return flask.render_template("index.md",
-                                     text=message['content'],
-                                     **_context(message))
+        return _render("index.md", message)
 
     def render_md_exception(exception):
-        return flask.render_template('404.md',
-                                     **_context())
+        return _render("404.md")
 
     @app.route("/")
     def nothing():
