@@ -1,18 +1,33 @@
 [![Build Status](https://api.travis-ci.org/joehakimrahme/blogstrap.png)](https://api.travis-ci.org/joehakimrahme/blogstrap)
 
 
-Blogstrap - A dumb blogging platform
-====================================
+Blogstrap - An opinionated blogging platform
+============================================
 
 Blogstrap is a simple blogging platform based on a few core principles:
+
+* **A blog is just a collection of text files**
+
+A Blogstrap blog is just a directory that contains articles. It should
+be readable using common text reading tools, and easily browsable in a
+terminal the way that any directory of files can. Blogstrap avoids
+complicated directory structures, databases and any other construct
+that sacrifices readability of the source.
+
+The only exception is made for Hidden Files, allowing the inclusion of
+different configuration files in the directory without turning them
+into articles. In particular, it expects a hidden directory
+`.blogstrap` that holds the Blogstrap-specific configuration.
 
 * **Version control management tools implement a lot of useful
   features for blogging**
 
-Blogstrap doesn't provide an admin application. Instead it expects the user to
-manage the underlying file system. It is recommended, but not required, to use
-version control systems which provide features like draft publishing (access
-control), code review, or history.
+Blogstrap doesn't provide the traditional blogging, like posting an
+article or managing user permissions. Instead it expects the user to
+manage the files on disk directly and push them to the server using
+their favorite tools. It is recommended, but not required, to use
+version control systems which provide features like draft publishing
+(access control), article review, or history.
 
 I use git and it's worked well for me. So far.
 
@@ -63,7 +78,7 @@ Blogstrap Quickstart
 Initialize your blog using:
 
 ```
-$ blogstrap init --target newblog
+$ blogstrap init --target /tmp/newblog
 ```
 
 This will create the `newblog` directory if it doesn't exist, and use
@@ -101,7 +116,7 @@ BLOGROOT = "/tmp/newblog"
 # The title will be added to the top banner in every page
 BLOGTITLE = "Generated with BlogStrap"
 # Make the app more verbose when necessary. Don't use in production.
-DEBUG = True
+DEBUG = False
 # This page will be displayed at the blog root
 HOMEPAGE = homepage_blogstrap
 ```
@@ -185,6 +200,6 @@ A Blogstrap blog is most likely going to be a source code repository
 and should be distributed as such. Readers can download Blogstrap
 locally in case they want to read it in their browser.
 
-It's still possible to host your own instance of Blogstrap over the
+It's also possible to host your own instance of Blogstrap over the
 web. Since it is built on top of Flask you can use any method that
 Flask [supports](http://flask.pocoo.org/docs/0.10/deploy).
