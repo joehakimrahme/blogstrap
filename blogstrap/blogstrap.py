@@ -43,8 +43,8 @@ class ArticleReader(object):
 
     def __init__(self, path):
         try:
-            with open(path) as f:
-                self.content = "".join(f.readlines())
+            with open(path) as article_file:
+                self.content = "".join(article_file.readlines())
                 self.metadata = {}
         except IOError:
             raise ArticleNotFound(path)
@@ -80,8 +80,8 @@ def create_app(config_file=None):
     def _render(template, message=None):
         ctx = context.context(app, message)
         result = flask.render_template(template, **ctx)
-        for k, v in ctx.items():
-            result = result.replace("{{ %s }}" % k, v)
+        for key, value in ctx.items():
+            result = result.replace("{{ %s }}" % key, value)
         return result
 
     def render_html(message):

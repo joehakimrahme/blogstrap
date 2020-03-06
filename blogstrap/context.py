@@ -20,10 +20,11 @@ def context(app, message=None):
         result = []
         for entry in os.listdir(app.config['BLOGROOT']):
             if os.path.isfile(entry) and not entry.startswith("."):
-                result.append("* [{}](../{})".format(entry, entry))
+                result.append("* [{article}](../{article})".format(
+                    article=entry))
         return "\n".join(result)
 
-    context = {
+    context_dict = {
         "author": app.config['AUTHOR'],
         "description": app.config['DESCRIPTION'],
         "lang": app.config['DEFAULT_LANG'],
@@ -31,6 +32,6 @@ def context(app, message=None):
         "toc": toc()
     }
     if message:
-        context['text'] = message['content']
-        context.update(message['metadata'])
-    return context
+        context_dict['text'] = message['content']
+        context_dict.update(message['metadata'])
+    return context_dict

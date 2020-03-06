@@ -52,19 +52,19 @@ def build(args):
     if not os.path.exists(bstrp_conf_path):
         os.makedirs(bstrp_conf_path)
 
-    with open(app_path, 'w') as f:
-        f.write(APP_TEMPLATE)
+    with open(app_path, 'w') as wsgi_file:
+        wsgi_file.write(APP_TEMPLATE)
 
     if not args.no_homepage:
         config_template = CONF_TEMPLATE + HOMEPAGE_TEMPLATE
-        landing_path = os.path.join(args.target, "homepage_blogstrap")
-        with open(landing_path, 'w') as f:
-            f.write("Hello Blogstrap!\n")
+        homepage_path = os.path.join(args.target, "homepage_blogstrap")
+        with open(homepage_path, 'w') as homepage_file:
+            homepage_file.write("Hello Blogstrap!\n")
     else:
         config_template = CONF_TEMPLATE
 
-    with open(conf_path, 'w') as f:
+    with open(conf_path, 'w') as config_file:
         # Before writing the template to disk, we fill in the blogroot's
         # absolute path
         full_target = os.path.abspath(args.target)
-        f.write(config_template.replace("BLGRT", full_target))
+        config_file.write(config_template.replace("BLGRT", full_target))
