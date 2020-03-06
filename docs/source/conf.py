@@ -16,11 +16,11 @@ source_suffix = '.md'
 master_doc = 'index'
 
 project = u'Blogstrap'
-copyright = u'2016, Joe H. Rahme'
+copyright = u'2020, Joe H. Rahme'
 author = u'Joe H. Rahme'
 
-version = '0.5.0'
-release = '0.5.0'
+version = '0.6.0'
+release = '0.6.0'
 
 language = None
 exclude_patterns = []
