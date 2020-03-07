@@ -14,11 +14,19 @@ window.onload = function () {
     div.innerHTML = html;
   }
 
+
+  /* Bootstrap Classes */
   // Add .table to our generated tables
   tables = blogpost[0].getElementsByTagName("table");
   for (table of tables) {
     table.classList.add("table");
   }
+
+  quotes = blogpost[0].getElementsByTagName("blockquote");
+  for (quote of quotes) {
+    quote.classList.add("blockquote");
+  }
+
 
   document.body.style.visibility = "visible";
 };
