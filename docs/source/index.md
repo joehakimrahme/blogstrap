@@ -104,7 +104,7 @@ newblog
   content. In practice you will almost never need to modify it.
 
 * **blogstrap.conf** holds the configuration options to manage aspects
-  of Blogstra behavior.
+  of Blogstrap behavior.
 
 
 Let's take a closer look at the config file:
@@ -154,7 +154,9 @@ Features
 * **Hidden files**: Blogstrap will return a 404 if requesting an
   article with a filename starting with `.`. This should allow you to
   commit dot configuration files like `.git` or `.gitconfig`. without
-  fearing them getting accessed.
+  fearing them getting accessed. It also ensures that nothing in the
+  blogstrap configuration directory (`.blogstrap`) is going to be
+  served.
 
 * **Page Variables**: Blogstrap presents page variables that can be
   inserted in your articles. At the time of this writing only `{{ toc
