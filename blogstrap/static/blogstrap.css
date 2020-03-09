@@ -20,6 +20,7 @@ nav {
 }
 .blogstrap p {
     padding-bottom: 1rem;
+    text-align: justify;
 }
 .blogstrap pre {
     background-color: #e0ddcf;
@@ -28,7 +29,23 @@ nav {
     padding: 1em;
 }
 
+.blogstrap blockquote p {
+    position: relative;
+    font-family: 'Sanchez', serif;
+    font-style: italic;
+    margin-left: 2em;
+    /* &:before { */
+    /* 	content: '\201C'; */
+    /* 	position: absolute; */
+    /* 	top: 0.25em; */
+    /* 	left: -0.15em; */
+    /* 	color: darken($white, 7%); */
+    /* 	font-size: 6em; */
+    /* 	z-index: -1; */
+    /* } */
+}
+
 /* support for html5 elements in non-html5 browsers */
 article, aside, footer, header, nav, section {
-  display: block;
+    display: block;
 }

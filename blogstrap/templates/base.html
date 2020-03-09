@@ -10,13 +10,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='blogstrap.css') }}">
   </head>
   <body class="bg-light">
+    <nav class="navbar navbar-expand-md navbar-dark navbar-fixed-top">
+      <a class="navbar-brand" href="/">{{ title }}</a>
+    </nav>
     <main class="container">
-      <nav class="navbar navbar-expand-md navbar-dark navbar-fixed-top">
-	<a class="navbar-brand" href="#">{{ title | upper }}</a>
-	<button class="navbar-toggler">
-	  <span class="navbar-toggler-icon"></span>
-	</button>
-      </nav>
       <article class="blogstrap">{% block content %}{% endblock %}
       </article>
     </main><!-- /.container -->
