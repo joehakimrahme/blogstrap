@@ -34,6 +34,9 @@ BLOGROOT = "BLGRT"
 BLOGTITLE = "Generated with BlogStrap"
 # Make the app more verbose when necessary. Don't use in production.
 DEBUG = False
+
+# STATIC_PAGES = []   # Insert link to these pages in the navbar
+# TOC_BLACKLIST = []  # Exclude these pages from the TOC
 """
 
 HOMEPAGE_TEMPLATE = """# This page will be displayed at the blog root
