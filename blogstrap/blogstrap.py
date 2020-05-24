@@ -63,6 +63,7 @@ class DefaultConfig(object):
     BLOGROOT = "."
     BLOGTITLE = "Powered by Blogstrap"
     DEFAULT_LANG = "en"
+    STATIC_PAGES = []
 
 
 # Registering markdown as a valid MIME.
@@ -81,7 +82,7 @@ def create_app(config_file=None):
         ctx = context.context(app, message)
         result = flask.render_template(template, **ctx)
         for key, value in ctx.items():
-            result = result.replace("{{ %s }}" % key, value)
+            result = result.replace("{{ %s }}" % key, str(value))
         return result
 
     def render_html(message):

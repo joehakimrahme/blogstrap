@@ -28,6 +28,7 @@ def context(app, message=None):
         "author": app.config['AUTHOR'],
         "description": app.config['DESCRIPTION'],
         "lang": app.config['DEFAULT_LANG'],
+        "static_pages": app.config['STATIC_PAGES'],
         "title": app.config['BLOGTITLE'],
         "toc": toc()
     }
