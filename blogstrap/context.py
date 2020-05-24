@@ -19,7 +19,8 @@ def context(app, message=None):
     def toc():
         result = []
         for entry in os.listdir(app.config['BLOGROOT']):
-            if os.path.isfile(entry) and not entry.startswith("."):
+            if os.path.isfile(entry) and not entry.startswith(".") and \
+               entry not in app.config['TOC_BLACKLIST']:
                 result.append("* [{article}](../{article})".format(
                     article=entry))
         return "\n".join(result)

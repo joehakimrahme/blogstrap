@@ -64,6 +64,7 @@ class DefaultConfig(object):
     BLOGTITLE = "Powered by Blogstrap"
     DEFAULT_LANG = "en"
     STATIC_PAGES = []
+    TOC_BLACKLIST = []
 
 
 # Registering markdown as a valid MIME.
