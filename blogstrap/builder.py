@@ -35,7 +35,7 @@ BLOGTITLE = "Generated with BlogStrap"
 # Make the app more verbose when necessary. Don't use in production.
 DEBUG = False
 
-# STATIC_PAGES = []   # Insert link to these pages in the navbar
+# NAVBAR_LINKS = {}   # key:value map of links to include in the Navbar.
 # TOC_BLACKLIST = []  # Exclude these pages from the TOC
 """
 

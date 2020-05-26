@@ -63,7 +63,7 @@ class DefaultConfig(object):
     BLOGROOT = "."
     BLOGTITLE = "Powered by Blogstrap"
     DEFAULT_LANG = "en"
-    STATIC_PAGES = []
+    NAVBAR_LINKS = []
     TOC_BLACKLIST = []
 
 

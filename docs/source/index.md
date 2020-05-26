@@ -118,7 +118,7 @@ BLOGTITLE = "Generated with BlogStrap"
 # Make the app more verbose when necessary. Don't use in production.
 DEBUG = False
 
-# STATIC_PAGES = []   # Insert link to these pages in the navbar
+# NAVBAR_LINKS = []   # Insert link to these pages in the navbar
 # TOC_BLACKLIST = []  # Exclude these pages from the TOC
 # This page will be displayed at the blog root
 HOMEPAGE = homepage_blogstrap
@@ -198,10 +198,10 @@ served. `article.md` will be served in any other case.
 
 In this case, `article` will never be served.
 
-* **Static Pages**: The optional configuration variable
-  **STATIC_PAGES** takes a list of pages as values, and allows the
-  creation of links to the pages that are present on the navbar at
-  every page.
+* **Navbar Links**: The optional configuration variable
+  **NAVBAR_LINKS** takes a dictionary of link:URL as values and allows
+  the creation of links (both internal and external) to be inserted on
+  the navbar on every page.
 
 * **TOC blacklist**: The optional configuration variable
   **TOC_BLACKLIST** allows to explicitly remove some pages from the
