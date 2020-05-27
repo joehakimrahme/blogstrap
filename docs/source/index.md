@@ -120,6 +120,7 @@ DEBUG = False
 
 # NAVBAR_LINKS = []   # Insert link to these pages in the navbar
 # TOC_BLACKLIST = []  # Exclude these pages from the TOC
+# STATIC_DIR = "images"
 # This page will be displayed at the blog root
 HOMEPAGE = homepage_blogstrap
 ```
@@ -206,6 +207,13 @@ In this case, `article` will never be served.
 * **TOC blacklist**: The optional configuration variable
   **TOC_BLACKLIST** allows to explicitly remove some pages from the
   `toc` variable.
+
+Serving media files
+-------------------
+
+Media files (images, videos, music, ...) should all be hosted inside a
+subdir *STATIC_DIR*, by default `images`. It is possible to configure
+this directory in the configuration file.
 
 How do I publish my newly created blog?
 ---------------------------------------

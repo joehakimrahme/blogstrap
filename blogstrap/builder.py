@@ -37,6 +37,7 @@ DEBUG = False
 
 # NAVBAR_LINKS = {}   # key:value map of links to include in the Navbar.
 # TOC_BLACKLIST = []  # Exclude these pages from the TOC
+# STATIC_DIR = "images"
 """
 
 HOMEPAGE_TEMPLATE = """# This page will be displayed at the blog root
@@ -48,12 +49,16 @@ def build(args):
     bstrp_conf_path = os.path.join(args.target, '.blogstrap')
     app_path = os.path.join(bstrp_conf_path, 'wsgi.py')
     conf_path = os.path.join(bstrp_conf_path, 'blogstrap.conf')
+    staticdir_path = os.path.join(args.target, 'images')
 
     if not os.path.exists(args.target):
         os.makedirs(args.target)
 
     if not os.path.exists(bstrp_conf_path):
         os.makedirs(bstrp_conf_path)
+
+    if not os.path.exists(staticdir_path):
+        os.makedirs(staticdir_path)
 
     with open(app_path, 'w') as wsgi_file:
         wsgi_file.write(APP_TEMPLATE)
