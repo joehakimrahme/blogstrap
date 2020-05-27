@@ -40,7 +40,6 @@ class BlogstrapTest(unittest.TestCase):
         blogpost = os.path.basename(self.tempfile.name)
         response = self.app.get(blogpost)
         self.assertEqual(200, response.status_code)
-        self.assertNotIn(b"SUCCESS", response.data)
         # default type is markdown, so we shouldn't get 'html'
         self.assertNotIn(b'html', response.data)
 
@@ -51,7 +50,6 @@ class BlogstrapTest(unittest.TestCase):
         blogpost = os.path.basename(self.tempfile.name)
         response = self.app.get(blogpost, headers={'Accept': 'text/html'})
         self.assertEqual(200, response.status_code)
-        self.assertNotIn(b"SUCCESS", response.data)
         self.assertIn(b'html', response.data)
 
     def test_get_hidden(self):
@@ -114,11 +112,9 @@ class BlogstrapTest(unittest.TestCase):
         blogpost = os.path.basename(self.tempfile.name)
         response = self.app.get(blogpost)
         self.assertEqual(200, response.status_code)
-        self.assertNotIn(b"SUCCESS", response.data)
         blogpost = os.path.basename(self.tempfile.name) + "/"
         response = self.app.get(blogpost)
         self.assertEqual(200, response.status_code)
-        self.assertNotIn(b"SUCCESS", response.data)
 
     def test_homepage(self):
         self.tempfile = tempfile.NamedTemporaryFile(
