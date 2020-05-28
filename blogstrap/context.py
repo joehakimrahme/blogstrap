@@ -30,10 +30,13 @@ def context(app, message=None):
         "description": app.config['DESCRIPTION'],
         "lang": app.config['DEFAULT_LANG'],
         "navbar_links": app.config['NAVBAR_LINKS'],
+        "static_dir": app.config['STATIC_DIR'],
         "title": app.config['BLOGTITLE'],
         "toc": toc()
     }
     if message:
         context_dict['text'] = message['content']
         context_dict.update(message['metadata'])
+    if app.config.get("FAVICON"):
+        context_dict["favicon"] = app.config["FAVICON"]
     return context_dict

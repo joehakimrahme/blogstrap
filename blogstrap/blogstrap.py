@@ -64,6 +64,7 @@ class DefaultConfig(object):
     BLOGTITLE = "Powered by Blogstrap"
     DEFAULT_LANG = "en"
     NAVBAR_LINKS = []
+    STATIC_DIR = "images"
     TOC_BLACKLIST = []
 
 
@@ -80,7 +81,7 @@ def create_app(config_file=None):
         app.config.from_pyfile(config_file)
 
     # default static files directory
-    staticdir = app.config.get('STATIC_DIR', 'images')
+    staticdir = app.config.get('STATIC_DIR')
 
     def _render(template, message=None):
         ctx = context.context(app, message)

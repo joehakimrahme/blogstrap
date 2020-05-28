@@ -38,6 +38,7 @@ DEBUG = False
 # NAVBAR_LINKS = {}   # key:value map of links to include in the Navbar.
 # TOC_BLACKLIST = []  # Exclude these pages from the TOC
 # STATIC_DIR = "images"
+# FAVICON = "favicon.ico"  # Located in the STATIC_DIR
 """
 
 HOMEPAGE_TEMPLATE = """# This page will be displayed at the blog root
