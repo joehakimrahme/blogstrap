@@ -12,7 +12,22 @@
 #    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 #    License for the specific language governing permissions and limitations
 #    under the License.
+import re
 import os
+
+
+def slugify(message):
+    message = re.sub(r"[^\w\s]", '', message)
+    message = re.sub(r"\s+", '-', message)
+
+    return message
+
+
+def unslugify(message):
+    message = message.replace(".", ". ")
+    message = message.replace("-", " ")
+    message = " ".join(word.capitalize() for word in message.split())
+    return message
 
 
 def context(app, message=None):
@@ -21,9 +36,10 @@ def context(app, message=None):
         for entry in os.listdir(app.config['BLOGROOT']):
             if os.path.isfile(entry) and not entry.startswith(".") and \
                entry not in app.config['TOC_BLACKLIST']:
-                result.append("* [{article}](../{article})".format(
+                result.append("* [{unslug}](../{article})".format(
+                    unslug=unslugify(entry),
                     article=entry))
-        return "\n".join(result)
+        return "\n".join(sorted(result))
 
     context_dict = {
         "author": app.config['AUTHOR'],

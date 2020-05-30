@@ -7,7 +7,6 @@ var converter = new showdown.Converter({
 window.onload = function () {
 
   var blogpost = document.getElementsByClassName("blogstrap");
-  //TODO: ES6 only. Provide support for older browsers
   for (div of blogpost) {
     text = div.textContent.trim().split('/\n */').join('\n');
     var html = converter.makeHtml(text);
@@ -16,7 +15,6 @@ window.onload = function () {
 
 
   /* Bootstrap Classes */
-  // Add .table to our generated tables
   tables = blogpost[0].getElementsByTagName("table");
   for (table of tables) {
     table.classList.add("table");
@@ -28,5 +26,9 @@ window.onload = function () {
   }
 
 
+  // the page starts hidden and is only shown visible after the whole
+  // conversion is done, to avoid the flickering animation at the
+  // start.
   document.body.style.visibility = "visible";
+
 };
