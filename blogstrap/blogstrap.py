@@ -81,7 +81,8 @@ def create_app(config_file=None):
         app.config.from_pyfile(config_file)
 
     # default static files directory
-    staticdir = app.config.get('STATIC_DIR')
+    staticdir = app.config.get('STATIC_DIR').rstrip("/")
+    staticdir_route = os.path.basename(staticdir)
 
     def _render(template, message=None):
         ctx = context.context(app, message)
@@ -111,7 +112,7 @@ def create_app(config_file=None):
         # no homepage defined return HTTP 204 No Content
         return ('', 204)
 
-    @app.route(f"/{staticdir}/<image>")
+    @app.route(f"/{staticdir_route}/<image>")
     def serve_static(image):
         full_directory = os.path.join(os.getcwd(), staticdir)
         if os.path.exists(os.path.join(full_directory, image)):

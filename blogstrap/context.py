@@ -45,7 +45,7 @@ def context(app, message=None):
         "description": app.config['DESCRIPTION'],
         "lang": app.config['DEFAULT_LANG'],
         "navbar_links": app.config['NAVBAR_LINKS'],
-        "static_dir": app.config['STATIC_DIR'],
+        "static_dir": os.path.basename(app.config['STATIC_DIR']),
         "title": app.config['BLOGTITLE'],
         "toc": toc()
     }
