@@ -123,9 +123,6 @@ class BlogstrapTest(unittest.TestCase):
         self.application.config['HOMEPAGE'] = os.path.basename(
             self.tempfile.name)
         response = self.app.get("/")
-        self.assertEqual(302, response.status_code)
-        self.assertIn('Location', response.headers)
-        response = self.app.get(response.headers['Location'])
         self.assertEqual(200, response.status_code)
 
     def test_toc(self):

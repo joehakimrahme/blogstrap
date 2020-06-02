@@ -106,9 +106,7 @@ def create_app(config_file=None):
     @app.route("/")
     def nothing():
         if 'HOMEPAGE' in app.config:
-            return flask.redirect(
-                flask.url_for('serve_blog',
-                              blogpost=app.config['HOMEPAGE']))
+            return serve_blog(blogpost=app.config['HOMEPAGE'])
         # no homepage defined return HTTP 204 No Content
         return ('', 204)
 
