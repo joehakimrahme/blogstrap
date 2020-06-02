@@ -33,7 +33,8 @@ def context(app, message=None):
     def toc():
         result = []
         for entry in os.listdir(app.config['BLOGROOT']):
-            if os.path.isfile(entry) and not entry.startswith(".") and \
+            if os.path.isfile(os.path.join(os.getcwd(), entry)) and \
+               not entry.startswith(".") and \
                entry not in app.config['TOC_BLACKLIST']:
                 result.append("* [{unslug}](../{article})".format(
                     unslug=unslugify(entry),
