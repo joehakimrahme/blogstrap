@@ -135,6 +135,16 @@ class BlogstrapTest(unittest.TestCase):
         response = self.app.get(blogpost)
         self.assertNotIn(b"{{ toc }}", response.data)
 
+    def test_metadata(self):
+        self.tempfile = tempfile.NamedTemporaryFile(
+            dir=".",
+            prefix="blogstrap-test-")
+        with open(self.tempfile.name, "w") as f:
+            f.write("# key: value\ncontent")
+        blogpost = os.path.basename(self.tempfile.name)
+        response = self.app.get(blogpost)
+        self.assertNotIn(b"key", response.data)
+
 
 if __name__ == '__main__':
     unittest.main()

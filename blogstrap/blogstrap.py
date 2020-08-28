@@ -29,6 +29,7 @@ if six.PY2:
 else:
     import blogstrap.builder as builder
     import blogstrap.context as context
+    import blogstrap.utils as utils
 
 
 class ArticleNotFound(IOError):
@@ -44,8 +45,10 @@ class ArticleReader(object):
     def __init__(self, path):
         try:
             with open(path) as article_file:
-                self.content = "".join(article_file.readlines())
-                self.metadata = {}
+                text = "".join(article_file.readlines())
+                text_dict = utils.parse_metadata(text)
+                self.content = text_dict['content']
+                self.metadata = text_dict['metadata']
         except IOError:
             raise ArticleNotFound(path)
 
