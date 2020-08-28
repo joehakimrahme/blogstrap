@@ -89,9 +89,11 @@ class BlogstrapTest(unittest.TestCase):
         html_filename = self.tempfile.name + ".html"
         with open(html_filename, "w") as f:
             f.write("htmltest")
+        self.addCleanup(os.remove, html_filename)
         markdown_filename = self.tempfile.name + ".md"
         with open(markdown_filename, "w") as f:
             f.write("markdowntest")
+        self.addCleanup(os.remove, markdown_filename)
         blogpost = os.path.basename(self.tempfile.name)
 
         response = self.app.get(blogpost, headers={'Accept': 'text/html'})
@@ -100,10 +102,6 @@ class BlogstrapTest(unittest.TestCase):
         self.assertIn(b'markdowntest', response.data)
         response = self.app.get(blogpost)
         self.assertIn(b'markdowntest', response.data)
-
-        # deleting the extra files
-        os.remove(html_filename)
-        os.remove(markdown_filename)
 
     def test_trailing_slashe(self):
         self.tempfile = tempfile.NamedTemporaryFile(
