@@ -10,9 +10,4 @@ Read the docs
 -------------
 
 You can check the documentation on the Web: http://www.blogstrap.org/
-
-You can always compile the doc locally yourself:
-
-    $ tox -e docs
-
-You can find the html result in `./build/sphinx/html/`.
+Or you can browser it locally in the directory `./docs/`

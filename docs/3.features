@@ -1,0 +1,64 @@
+Features
+--------
+
+Blogstrap is pretty minimal by design but it does present some
+features and various levels of customizations:
+
+* **Hidden files**: Blogstrap will return a 404 if requesting an
+  article with a filename starting with `.`. This should allow you to
+  commit dot configuration files like `.git` or `.gitconfig`. without
+  fearing them getting accessed. It also ensures that nothing in the
+  blogstrap configuration directory (`.blogstrap`) is going to be
+  served.
+
+* **Navbar Links**: The optional configuration variable
+  **NAVBAR_LINKS** takes a key:value map of link:urls, and allows the
+  creation of links to the pages that are present on the navbar at
+  every page.
+
+* **Page Variables**: Blogstrap presents page variables that can be
+  inserted in your articles. At the time of this writing only `{{ toc
+  }}` is available and gets replaced by a Table of Contents.
+
+* **TOC blacklist**: The optional configuration variable
+  **TOC_BLACKLIST** allows to explicitly remove some pages from the
+  `toc` variable.
+
+* **Overshadow**: Makes it possible to serve different content for
+  markdown and html. If a file exists with the same name and
+  `.html`/`.md` suffix, it will be served in priority when requested.
+
+
+**Overshadow Examples**:
+
+```
+.
+├── article
+└── article.html
+```
+
+If `text/html` is requested then `article.html` will be served.
+`article` will be served in any other case.
+
+```
+.
+├── article
+└── article.md
+```
+
+In this case, if `text/html` is requested then `article` will be
+served. `article.md` will be served in any other case.
+
+```
+.
+├── article
+├── article.html
+└── article.md
+```
+
+In this case, `article` will never be served.
+
+
+Documentation
+-------------
+{{ toc }}

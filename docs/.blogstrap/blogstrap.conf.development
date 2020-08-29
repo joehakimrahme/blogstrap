@@ -1,0 +1,17 @@
+# The path of a directory that holds the markdown articles
+BLOGROOT = "."
+# The title will be added to the top banner in every page
+BLOGTITLE = "Blogstrap"
+# Make the app more verbose when necessary. Don't use in production.
+DEBUG = True
+ENV = "development"
+# This page will be displayed at the blog root
+HOMEPAGE = "index"
+
+NAVBAR_LINKS = {
+    'Contribute': 'https://github.com/joehakimrahme/Blogstrap',
+    "What's New": 'whats-new',
+}
+TOC_BLACKLIST = ['whats-new', 'index']
+STATIC_DIR = "images"
+FAVICON = "favicon.png"

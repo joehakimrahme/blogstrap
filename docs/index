@@ -1,0 +1,56 @@
+Blogstrap - A simple blogging tool
+==================================
+
+![](images/logo.png)
+
+Blogstrap is a simple blogging tool that puts emphasis on the
+following 3 concepts:
+
+
+**Readability of the source code**
+
+A Blogstrap blog is just a directory that contains articles. It should
+be readable using common text reading tools, and easily browsable in a
+terminal the way that any directory of files can. Blogstrap avoids
+complicated directory structures, databases and any other construct
+that sacrifices readability of the source.
+
+
+**Minimalism of features**
+
+Blogstrap doesn't provide the traditional blogging features, like
+posting an article or managing user permissions. Instead it expects
+the user to manage the files on disk directly and push them to the
+server using their favorite tools. It is recommended, but not
+required, to use version control systems which provide features like
+draft publishing (access control), article review, or history. I use
+git and it's worked well for me. So far.
+
+
+**HTML belongs in the browser only**
+
+HTML is a format that belongs only inside the browser. There's no reason to
+generate, store or serve HTML outside it. Unless specifically requested,
+Blogstrap will generally serve raw markdown content. However if the client
+requests HTML (with the `Accept: text/html` header, all popular browsers use
+this by default), Blogstrap will serve a Javascript library along the markdown
+content so that the html conversion is done on the client side.
+
+
+How does it work?
+-----------------
+
+Blogstrap is a [Flask](https://flask.pocoo.org/) application that
+serves static files over the web. The files are expected to be written
+in [Markdown](https://daringfireball.net/projects/markdown/syntax). If
+the client requests html explicitly, Blogstrap wraps the file in HTML
+tags, along with some javascript based on
+[Showdown.js](https://showdownjs.com/) to handle client-side
+conversion of the text into HTML, as well as some frontend artefacts
+based on [Bootstrap](https://getbootstrap.com) to make the page
+beautitful.
+
+
+Documentation
+-------------
+{{ toc }}
