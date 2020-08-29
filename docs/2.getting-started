@@ -1,6 +1,8 @@
 Getting Started
 ---------------
 
+{{ toc }}
+
 Initialize your blog using:
 
 ```
@@ -81,7 +83,3 @@ $ curl http://127.0.0.1:5000/helloworld
 Note that if you access `http://127.0.0.1:5000/helloworld` from your
 web browser, Blogstrap will generate an html version of the article
 instead of the markdown version.
-
-Documentation
--------------
-{{ toc }}

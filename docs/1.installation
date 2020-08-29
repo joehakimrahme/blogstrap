@@ -1,13 +1,15 @@
 Installation
 ------------
 
-* Available on PyPI:
+{{ toc }}
+
+Available on PyPI:
 
 ```
 $ pip install blogstrap
 ```
 
-* It's still changing fast so I recommend installing from source:
+It's still changing fast so I recommend installing from source:
 
 ```
 $ git clone https://github.com/joehakimrahme/Blogstrap
@@ -17,8 +19,3 @@ $ python setup.py install
 
 It's recommended that you install Blogstrap inside a virtualenv or in a
 dedicated virtual machine (or cloud instance).
-
-
-Documentation
--------------
-{{ toc }}

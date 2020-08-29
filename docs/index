@@ -3,6 +3,11 @@ Blogstrap - A simple blogging tool
 
 ![](images/logo.png)
 
+
+Documentation
+-------------
+{{ toc }}
+
 Blogstrap is a simple blogging tool that puts emphasis on the
 following 3 concepts:
 
@@ -49,8 +54,3 @@ tags, along with some javascript based on
 conversion of the text into HTML, as well as some frontend artefacts
 based on [Bootstrap](https://getbootstrap.com) to make the page
 beautitful.
-
-
-Documentation
--------------
-{{ toc }}

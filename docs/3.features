@@ -1,5 +1,9 @@
+# variable: {{ variable }}
+
 Features
 --------
+
+{{ toc }}
 
 Blogstrap is pretty minimal by design but it does present some
 features and various levels of customizations:
@@ -17,8 +21,8 @@ features and various levels of customizations:
   every page.
 
 * **Page Variables**: Blogstrap presents page variables that can be
-  inserted in your articles. At the time of this writing only `{{ toc
-  }}` is available and gets replaced by a Table of Contents.
+  inserted in your articles. More info on the available Page Variables
+  and how to control their values can be found below.
 
 * **TOC blacklist**: The optional configuration variable
   **TOC_BLACKLIST** allows to explicitly remove some pages from the
@@ -28,8 +32,15 @@ features and various levels of customizations:
   markdown and html. If a file exists with the same name and
   `.html`/`.md` suffix, it will be served in priority when requested.
 
+* **User Metadata**: At the top of the article, any line following the
+  pattern `# <key>: <value>` will be treated as User Metadata. This
+  means it will be stripped out of the served content. **Page
+  Variables** can use these metadata to replace some values locally to
+  some files. Future features will be using these metadata as well.
 
-**Overshadow Examples**:
+
+Overshadow Examples
+-------------------
 
 ```
 .
@@ -59,6 +70,29 @@ served. `article.md` will be served in any other case.
 In this case, `article` will never be served.
 
 
-Documentation
--------------
-{{ toc }}
+Understanding Page Variables
+----------------------------
+
+A **Page Variable** is a placeholder within the article that gets
+dynamically replaced before serving. A page variable follows the
+format `{{ variable }}`. Before serving an article, Blogstrap will
+look for any string that matches this pattern in the content and will
+replace it with its value.
+
+Here's a list of the available Page Variables and their default
+values:
+
+* **author**: "Blogstrap" (default)
+* **description**: "Powered By Blogstrap" (default)
+* **author**: "Powered By Blogstrap" (default)
+* **toc**: Generates a dynamic table of content, based on the
+available files on disk. Some files can be ignored by using the
+**TOC_BLACKLIST** config option. The generated TOC will be formatted
+in HTMl or MD depending on the incoming http request.
+
+There are 2 ways to modify the values of a Page Variable:
+
+- Defining the variable in the Blogstrap config file. This will have a
+  projet-wide effect and will change the value for all the articles.
+- As a User Metadata at the top of a file. This will only overwrite
+  the value in the scope of that file.

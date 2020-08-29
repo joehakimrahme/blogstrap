@@ -1,5 +1,7 @@
 How do I publish my newly created blog?
----------------------------------------
+-------------
+
+{{ toc }}
 
 A Blogstrap blog is most likely going to be a source code repository
 and should be distributed as such. Readers can download Blogstrap
@@ -8,7 +10,3 @@ locally in case they want to read it in their browser.
 It's also possible to host your own instance of Blogstrap over the
 web. Since it is built on top of Flask you can use any method that
 Flask [supports](http://flask.pocoo.org/docs/0.10/deploy).
-
-Documentation
--------------
-{{ toc }}
