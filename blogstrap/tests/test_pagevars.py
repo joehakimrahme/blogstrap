@@ -18,6 +18,8 @@ import tempfile
 import unittest
 
 import blogstrap
+import six
+
 
 Case = collections.namedtuple('Case', 'name article config expected')
 ALL_CASES = []
@@ -42,7 +44,7 @@ article_meta = """
 # author: test-meta
 {{ author }}
 """
-config_meta = 'test-meta'
+config_meta = 'test-conf'
 expected_meta = """test-meta
 """
 ALL_CASES.append(Case("meta", article_meta, config_meta, expected_meta))
@@ -70,7 +72,14 @@ def test_generator(article, config, expected):
         if config:
             self.config['AUTHOR'] = config
         response = self.app.get(blogpost)
-        self.assertIn(bytes(expected, encoding='utf-8'), response.data)
+        if not six.PY2:
+            # in PY3, strings are NOT arrays of bytes. In order to do
+            # the comparison, we need to create a bytes object.
+            # In PY2, bytes and str are equivalent
+            _expected = bytes(expected, encoding='utf-8')
+        else:
+            _expected = expected
+        self.assertIn(_expected, response.data)
     return test
 
 

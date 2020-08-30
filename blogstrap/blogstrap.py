@@ -26,6 +26,7 @@ if six.PY2:
 
     import builder
     import context
+    import utils
 else:
     import blogstrap.builder as builder
     import blogstrap.context as context
@@ -113,7 +114,7 @@ def create_app(config_file=None):
         # no homepage defined return HTTP 204 No Content
         return ('', 204)
 
-    @app.route(f"/{staticdir_route}/<image>")
+    @app.route("/%s/<image>" % staticdir_route)
     def serve_static(image):
         full_directory = os.path.join(os.getcwd(), staticdir)
         if os.path.exists(os.path.join(full_directory, image)):
