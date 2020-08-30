@@ -140,7 +140,7 @@ ALL_CASES.append(Case("multiline_content", case_multiline_content,
                       expected_multiline_content))
 
 
-class TestMetadataParser(unittest.TestCase):
+class MetadataParserTest(unittest.TestCase):
     # In order to avoid repetition, this class will be populated dynamically at
     # the bottom of this file.
     pass
@@ -158,7 +158,7 @@ def test_generator(string, expected):
 for case in ALL_CASES:
     test_name = 'test_%s' % case.name
     test = test_generator(case.case, case.expected)
-    setattr(TestMetadataParser, test_name, test)
+    setattr(MetadataParserTest, test_name, test)
 
 
 if __name__ == "__main__":

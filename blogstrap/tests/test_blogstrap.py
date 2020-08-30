@@ -14,78 +14,115 @@
 #    under the License.
 import os
 import os.path
+import six
 import tempfile
 import unittest
 
 import blogstrap
 
 
-class BlogstrapTest(unittest.TestCase):
+def is_html(response):
+    # if the response data is served as HTML, then the beginning of
+    # the response should be `<html>`.
+    return b'html' in response.data
+
+
+def create_tempfile(prefix="blogstrap-test-", content=None):
+    # Helper utility function to create test articles based on the
+    # tempfile module.
+    _tempfile = tempfile.NamedTemporaryFile(
+        dir=".",
+        prefix=prefix)
+    if content:
+        with open(_tempfile.name, "w") as f:
+            f.write(content)
+    return _tempfile
+
+
+class BaseTest(unittest.TestCase):
 
     def setUp(self):
-        super(BlogstrapTest, self).setUp()
+        super(BaseTest, self).setUp()
         self.application = blogstrap.create_app()
-        self.application.config['TESTING'] = True
         self.config = self.application.config
+        self.config['TESTING'] = True
         self.app = self.application.test_client()
+
+
+class BlogstrapTest(BaseTest):
 
     def test_root(self):
         response = self.app.get("/")
         self.assertEqual(204, response.status_code)
 
     def test_get_article(self):
-        self.tempfile = tempfile.NamedTemporaryFile(
-            dir=".",
-            prefix="blogstrap-test-")
+        self.tempfile = create_tempfile()
         blogpost = os.path.basename(self.tempfile.name)
         response = self.app.get(blogpost)
         self.assertEqual(200, response.status_code)
         # default type is markdown, so we shouldn't get 'html'
-        self.assertNotIn(b'html', response.data)
+        self.assertFalse(is_html(response))
 
     def test_get_html_article(self):
-        self.tempfile = tempfile.NamedTemporaryFile(
-            dir=".",
-            prefix="blogstrap-test-")
+        self.tempfile = create_tempfile()
         blogpost = os.path.basename(self.tempfile.name)
         response = self.app.get(blogpost, headers={'Accept': 'text/html'})
         self.assertEqual(200, response.status_code)
-        self.assertIn(b'html', response.data)
+        self.assertTrue(is_html(response))
 
     def test_get_hidden(self):
         # files starting with '.' are off limit
-        self.tempfile = tempfile.NamedTemporaryFile(
-            dir=".",
-            prefix=".blogstrap-test-")
+        self.tempfile = create_tempfile(prefix=".blogstrap-test-")
         blogpost = os.path.basename(self.tempfile.name)
         response = self.app.get(blogpost)
         self.assertEqual(404, response.status_code)
-        self.assertNotIn(b'html', response.data)
+        self.assertFalse(is_html(response))
 
     def test_get_html_hidden(self):
-        self.tempfile = tempfile.NamedTemporaryFile(
-            dir=".",
-            prefix=".blogstrap-test-")
+        self.tempfile = create_tempfile(prefix=".blogstrap-test-")
         blogpost = os.path.basename(self.tempfile.name)
         response = self.app.get(blogpost, headers={'Accept': 'text/html'})
         self.assertEqual(404, response.status_code)
-        self.assertIn(b'html', response.data)
+        self.assertTrue(is_html(response))
 
     def test_get_nonexistent(self):
         response = self.app.get("nonexistent")
         self.assertEqual(404, response.status_code)
-        self.assertNotIn(b'html', response.data)
+        self.assertFalse(is_html(response))
 
     def test_get_html_nonexistent(self):
         response = self.app.get("nonexistent", headers={
             'Accept': 'text/html'})
         self.assertEqual(404, response.status_code)
-        self.assertIn(b'html', response.data)
+        self.assertTrue(is_html(response))
 
+    def test_trailing_slashe(self):
+        self.tempfile = create_tempfile()
+        blogpost = os.path.basename(self.tempfile.name)
+        response = self.app.get(blogpost)
+        self.assertEqual(200, response.status_code)
+        blogpost = os.path.basename(self.tempfile.name) + "/"
+        response = self.app.get(blogpost)
+        self.assertEqual(200, response.status_code)
+
+    def test_homepage(self):
+        self.tempfile = create_tempfile()
+        self.config['HOMEPAGE'] = os.path.basename(
+            self.tempfile.name)
+        response = self.app.get("/")
+        self.assertEqual(200, response.status_code)
+
+    def test_metadata(self):
+        self.tempfile = create_tempfile(
+            content="# key: value\ncontent")
+        blogpost = os.path.basename(self.tempfile.name)
+        response = self.app.get(blogpost)
+        self.assertNotIn(b"key", response.data)
+
+
+class OvershadowTest(BaseTest):
     def test_overshadow(self):
-        self.tempfile = tempfile.NamedTemporaryFile(
-            dir=".",
-            prefix="blogstrap-test-")
+        self.tempfile = create_tempfile()
         html_filename = self.tempfile.name + ".html"
         with open(html_filename, "w") as f:
             f.write("htmltest")
@@ -95,7 +132,6 @@ class BlogstrapTest(unittest.TestCase):
             f.write("markdowntest")
         self.addCleanup(os.remove, markdown_filename)
         blogpost = os.path.basename(self.tempfile.name)
-
         response = self.app.get(blogpost, headers={'Accept': 'text/html'})
         self.assertIn(b'htmltest', response.data)
         response = self.app.get(blogpost, headers={'Accept': 'text/markdown'})
@@ -103,45 +139,38 @@ class BlogstrapTest(unittest.TestCase):
         response = self.app.get(blogpost)
         self.assertIn(b'markdowntest', response.data)
 
-    def test_trailing_slashe(self):
-        self.tempfile = tempfile.NamedTemporaryFile(
-            dir=".",
-            prefix="blogstrap-test-")
-        blogpost = os.path.basename(self.tempfile.name)
-        response = self.app.get(blogpost)
-        self.assertEqual(200, response.status_code)
-        blogpost = os.path.basename(self.tempfile.name) + "/"
-        response = self.app.get(blogpost)
-        self.assertEqual(200, response.status_code)
 
-    def test_homepage(self):
-        self.tempfile = tempfile.NamedTemporaryFile(
-            dir=".",
-            prefix="blogstrap-test-homepage-")
-        self.application.config['HOMEPAGE'] = os.path.basename(
-            self.tempfile.name)
-        response = self.app.get("/")
-        self.assertEqual(200, response.status_code)
-
+class TOCTest(BaseTest):
     def test_toc(self):
-        self.tempfile = tempfile.NamedTemporaryFile(
-            dir=".",
-            prefix="blogstrap-test-")
-        with open(self.tempfile.name, "w") as f:
-            f.write("{{ toc }}")
+        self.tempfile = create_tempfile(content="{{ toc }}")
         blogpost = os.path.basename(self.tempfile.name)
+        articles = []
+        # Create 3 temporary articles and make sure they appear in the
+        # {{ toc }}
+        for i in range(3):
+            _tempfile = open("blogstrap-toc-test-%s" % i, "w")
+            _tempfile.close()
+            self.addCleanup(os.remove, _tempfile.name)
+            _base_name = os.path.basename(_tempfile.name)
+            articles.append(_base_name)
         response = self.app.get(blogpost)
         self.assertNotIn(b"{{ toc }}", response.data)
+        for name in articles:
+            if not six.PY2:
+                _name = bytes(name, encoding="utf-8")
+            else:
+                _name = name
+            self.assertIn(_name, response.data)
 
-    def test_metadata(self):
-        self.tempfile = tempfile.NamedTemporaryFile(
-            dir=".",
-            prefix="blogstrap-test-")
-        with open(self.tempfile.name, "w") as f:
-            f.write("# key: value\ncontent")
+    def test_toc_hidden(self):
+        self.tempfile = create_tempfile(content="{{ toc }}")
         blogpost = os.path.basename(self.tempfile.name)
+        _tempfile = open(".blogstrap-toc-test", "w")
+        _tempfile.close()
+        self.addCleanup(os.remove, _tempfile.name)
         response = self.app.get(blogpost)
-        self.assertNotIn(b"key", response.data)
+        self.assertNotIn(b"{{ toc }}", response.data)
+        self.assertNotIn(b".blogstrap-toc-test", response.data)
 
 
 if __name__ == '__main__':
