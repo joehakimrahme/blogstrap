@@ -14,11 +14,11 @@
 #    under the License.
 import os
 import os.path
-import six
 import tempfile
 import unittest
 
 import blogstrap
+import six
 
 
 def is_html(response):
