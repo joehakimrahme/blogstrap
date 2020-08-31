@@ -121,7 +121,36 @@ class BlogstrapTest(BaseTest):
 
 
 class OvershadowTest(BaseTest):
-    def test_overshadow(self):
+    def test_overshadow_html(self):
+        self.tempfile = create_tempfile()
+        html_filename = self.tempfile.name + ".html"
+        with open(html_filename, "w") as f:
+            f.write("htmltest")
+        self.addCleanup(os.remove, html_filename)
+
+        blogpost = os.path.basename(self.tempfile.name)
+        response = self.app.get(blogpost, headers={'Accept': 'text/html'})
+        self.assertIn(b'htmltest', response.data)
+        response = self.app.get(blogpost, headers={'Accept': 'text/markdown'})
+        self.assertNotIn(b'htmltest', response.data)
+        response = self.app.get(blogpost)
+        self.assertNotIn(b'htmltest', response.data)
+
+    def test_overshadow_md(self):
+        self.tempfile = create_tempfile()
+        markdown_filename = self.tempfile.name + ".md"
+        with open(markdown_filename, "w") as f:
+            f.write("markdowntest")
+        self.addCleanup(os.remove, markdown_filename)
+        blogpost = os.path.basename(self.tempfile.name)
+        response = self.app.get(blogpost, headers={'Accept': 'text/html'})
+        self.assertNotIn(b'markdowntest', response.data)
+        response = self.app.get(blogpost, headers={'Accept': 'text/markdown'})
+        self.assertIn(b'markdowntest', response.data)
+        response = self.app.get(blogpost)
+        self.assertIn(b'markdowntest', response.data)
+
+    def test_overshadow_both(self):
         self.tempfile = create_tempfile()
         html_filename = self.tempfile.name + ".html"
         with open(html_filename, "w") as f:
@@ -141,6 +170,21 @@ class OvershadowTest(BaseTest):
 
 
 class TOCTest(BaseTest):
+
+    def assertInResponse(self, string, response):
+        if not six.PY2:
+            _name = bytes(string, encoding='utf-8')
+        else:
+            _name = string
+        self.assertIn(_name, response.data)
+
+    def assertNotInResponse(self, string, response):
+        if not six.PY2:
+            _name = bytes(string, encoding='utf-8')
+        else:
+            _name = string
+        self.assertNotIn(_name, response.data)
+
     def test_toc(self):
         self.tempfile = create_tempfile(content="{{ toc }}")
         blogpost = os.path.basename(self.tempfile.name)
@@ -156,11 +200,26 @@ class TOCTest(BaseTest):
         response = self.app.get(blogpost)
         self.assertNotIn(b"{{ toc }}", response.data)
         for name in articles:
-            if not six.PY2:
-                _name = bytes(name, encoding="utf-8")
-            else:
-                _name = name
-            self.assertIn(_name, response.data)
+            self.assertInResponse(name, response)
+
+    def test_tocblacklist(self):
+        self.tempfile = create_tempfile(content="{{ toc }}")
+        blogpost = os.path.basename(self.tempfile.name)
+        articles = []
+        # Create 3 temporary articles and make sure they appear in the
+        # {{ toc }}
+        for i in range(3):
+            _tempfile = open("blogstrap-tocblacklist-test-%s" % i, "w")
+            _tempfile.close()
+            self.addCleanup(os.remove, _tempfile.name)
+            _base_name = os.path.basename(_tempfile.name)
+            articles.append(_base_name)
+        self.config['TOC_BLACKLIST'] = ['blogstrap-tocblacklist-test-1']
+        response = self.app.get(blogpost)
+        self.assertNotIn(b"{{ toc }}", response.data)
+        self.assertInResponse('blogstrap-tocblacklist-test-0', response)
+        self.assertInResponse('blogstrap-tocblacklist-test-2', response)
+        self.assertNotInResponse('blogstrap-tocblacklist-test-1', response)
 
     def test_toc_hidden(self):
         self.tempfile = create_tempfile(content="{{ toc }}")
