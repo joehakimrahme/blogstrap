@@ -1,7 +1,42 @@
+What's new in Blogstrap 0.8?
+----------------------------
+
+In this version, Blogstrap becomes more dynamic focusing on adding new
+features and revamping the testing infrastructure to accommodate the
+growth in lines of code.
+
+* **Page Variables**: Blogstrap expands on the list of available Page
+    Variables. It also provides mechanisms to overwrite the values of
+    these variables on both the project-wide scope and the file-only
+    scope.
+
+* **User Metadata**: Blogstrap gains a mechanism for article authors
+    to define some local metadata. The metadata is stripped out of the
+    content before serving. The only use so far is to replace Page
+    Variables values locally, but it will be even more useful in the
+    future.
+
+* **Dropping Sphinx documentation**: Blostrap doc is now formatted for
+    Blogstrap. The blogstrap.org website is now the official (in-tree)
+    documentation of the project. This means that the docs hosted at
+    readthedocs are obsolete.
+
+* **HOMEPAGE is now served directly**: In previous versions, defining
+    HOMEPAGE would do a flask redirection, meaning Blogstrap would
+    return a 3xx request that the client needed to follow. This
+    behavior proved to be less practical than I thought, so starting
+    this version Blogstrap will serve the target HOMEPAGE directly
+    with the redirection shenanigans.
+
+* **Testing Revamp** This version of Blogstrap brings a lot of focus
+    on testing. The total number of tests has more than doubled. Tests
+    cover more features and are laid out in several classes.
+
+
 What's new in Blogstrap 0.7?
 ----------------------------
 
-This version got the reamining features needed to create the
+This version got the remaining features needed to create the
 blogstrap.org website. Here are the most interesting new features:
 
 * **Media support**: Blogstrap provides the ability to serve static
